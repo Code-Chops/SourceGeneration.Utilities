@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<VersionPrefix>0.0.1</VersionPrefix>
-	<PackageReleaseNotes>Init.</PackageReleaseNotes>
+	<VersionPrefix>0.0.2</VersionPrefix>
+	<PackageReleaseNotes>Code changes based on suggestions.</PackageReleaseNotes>
 	<TargetFramework>netstandard2.0</TargetFramework>
 	<LangVersion>10</LangVersion>
   </PropertyGroup>

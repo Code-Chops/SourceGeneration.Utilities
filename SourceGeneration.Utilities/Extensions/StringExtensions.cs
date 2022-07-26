@@ -46,6 +46,7 @@ public static class StringExtensions
 		return source;
 	}
 
+	// ReSharper disable once MemberCanBePrivate.Global
 	public static int GetStableHashCode32(this string source)
 	{
 		var span = source.AsSpan();
@@ -63,13 +64,14 @@ public static class StringExtensions
 
 			var result = fnv32Offset;
 
-			for (int i = 0; i < span.Length; i++)
-				result = (result ^ span[i]) * fnv32Prime;
+			foreach (var t in span)
+				result = (result ^ t) * fnv32Prime;
 
 			return (int)result;
 		}
 	}
 
+	// ReSharper disable once MemberCanBePrivate.Global
 	public static ulong GetStableHashCode64(this string source)
 	{
 		var span = source.AsSpan();
@@ -86,8 +88,8 @@ public static class StringExtensions
 
 			var result = fnv64Offset;
 
-			for (int i = 0; i < span.Length; i++)
-				result = (result ^ span[i]) * fnv64Prime;
+			foreach (var t in span)
+				result = (result ^ t) * fnv64Prime;
 
 			return result;
 		}
