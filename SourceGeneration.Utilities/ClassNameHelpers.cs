@@ -1,4 +1,4 @@
-﻿namespace CodeChops.ImplementationDiscovery.SourceGeneration.Helpers;
+﻿namespace CodeChops.SourceGeneration.Utilities;
 
 /// <summary>
 /// Provides helpers for class (or interface) names.
