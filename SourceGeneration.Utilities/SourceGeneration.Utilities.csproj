@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<VersionPrefix>0.0.8</VersionPrefix>
-	<PackageReleaseNotes>Removed private assets all.</PackageReleaseNotes>
+	<VersionPrefix>0.0.9</VersionPrefix>
+	<PackageReleaseNotes>Added private assets is all.</PackageReleaseNotes>
 	<TargetFramework>netstandard2.0</TargetFramework>
 	<LangVersion>10</LangVersion>
   </PropertyGroup>
@@ -47,8 +47,8 @@ Contains utilities for easy implementation of source generators.
   </ItemGroup>
 	
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" PrivateAssets="all" />
   </ItemGroup>
 
   <PropertyGroup>
