@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<VersionPrefix>0.0.6</VersionPrefix>
-	<PackageReleaseNotes>Fixed namespace of class name helpers.</PackageReleaseNotes>
+	<VersionPrefix>0.0.7</VersionPrefix>
+	<PackageReleaseNotes>AttributeDataExtensions.TryGetArguments ordinal ignore case.</PackageReleaseNotes>
 	<TargetFramework>netstandard2.0</TargetFramework>
 	<LangVersion>10</LangVersion>
   </PropertyGroup>

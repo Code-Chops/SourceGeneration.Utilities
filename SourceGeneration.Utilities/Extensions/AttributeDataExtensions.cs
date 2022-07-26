@@ -21,10 +21,10 @@ public static class AttributeDataExtensions
 		var argumentNames = constructorParameters.Value.Select(parameterSymbol => parameterSymbol.Name).ToList();
 
 		// Combine the argument names by their constant (retrieved from the constructor arguments).
-		var argumentNameAndTypePairs = attributeData.ConstructorArguments.Select((info, index) => (Name: argumentNames[index], Type: info));
+		var argumentNameAndTypePairs = attributeData.ConstructorArguments.Select((type, index) => (Name: argumentNames[index], Type: type));
 		
 		// Create a dictionary with the argument as key and a 
-		argumentConstantByNames = argumentNameAndTypePairs.ToDictionary(argument => argument.Name, argument => argument.Type);
+		argumentConstantByNames = argumentNameAndTypePairs.ToDictionary(argument => argument.Name, argument => argument.Type, StringComparer.OrdinalIgnoreCase);
 		
 		return true;
 	}
