@@ -1,4 +1,5 @@
-﻿namespace CodeChops.SourceGeneration.Utilities.Extensions;
+﻿// ReSharper disable MemberCanBePrivate.Global
+namespace CodeChops.SourceGeneration.Utilities.Extensions;
 
 /// <summary>
 /// Provides extensions on <see cref="ITypeSymbol"/>.
@@ -143,9 +144,7 @@ public static class TypeSymbolExtensions
 	/// </summary>
 	public static bool HasSingleGenericTypeArgument(this ITypeSymbol typeSymbol, ITypeSymbol requiredTypeArgument)
 	{
-		return typeSymbol is INamedTypeSymbol namedTypeSymbol &&
-			namedTypeSymbol.TypeArguments.Length == 1 &&
-			namedTypeSymbol.TypeArguments[0].Equals(requiredTypeArgument, SymbolEqualityComparer.Default);
+		return typeSymbol is INamedTypeSymbol { TypeArguments.Length: 1 } namedTypeSymbol && namedTypeSymbol.TypeArguments[0].Equals(requiredTypeArgument, SymbolEqualityComparer.Default);
 	}
 
 	/// <summary>
@@ -170,8 +169,7 @@ public static class TypeSymbolExtensions
 
 		return result;
 	}
-
-
+	
 	/// <summary>
 	/// Returns whether the <see cref="ITypeSymbol"/> is a generic type.
 	/// </summary>
@@ -491,14 +489,14 @@ public static class TypeSymbolExtensions
 	}
 	
 	/// <summary>
-	/// Gets the definition of a class, record or interface. E.g.: 'public abstract partial class Test'.
+	/// Gets the declaration of a class, record or interface. E.g.: 'public abstract (partial) class Test'.
 	/// </summary>
-	public static string GetObjectDefinition(this ITypeSymbol typeSymbol, bool makePartial = true)
+	public static string GetObjectDeclaration(this ITypeSymbol typeSymbol, bool includePartial = true)
 	{
 		var accessibility = typeSymbol.DeclaredAccessibility.ToString().ToLowerInvariant();
 		var staticOrEmpty = typeSymbol.IsStatic ? "static " : "";
 		var abstractOrEmpty = typeSymbol.IsAbstract && typeSymbol.TypeKind == TypeKind.Class ? "abstract " : "";
-		var partialOrEmpty = makePartial && typeSymbol.TypeKind != TypeKind.Enum ? "partial " : "";
+		var partialOrEmpty = includePartial && typeSymbol.TypeKind != TypeKind.Enum ? "partial " : "";
 		
 		var definition = $"{accessibility} {staticOrEmpty}{abstractOrEmpty}{partialOrEmpty}{typeSymbol.GetClassTypeName()}";
 

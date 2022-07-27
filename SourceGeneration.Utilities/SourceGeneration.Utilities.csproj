@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<VersionPrefix>0.0.9</VersionPrefix>
-	<PackageReleaseNotes>Added private assets is all.</PackageReleaseNotes>
+	<VersionPrefix>0.1.0</VersionPrefix>
+	<PackageReleaseNotes>Renamed GetObjectDefinition to GetObjectDeclaration.</PackageReleaseNotes>
 	<TargetFramework>netstandard2.0</TargetFramework>
 	<LangVersion>10</LangVersion>
   </PropertyGroup>

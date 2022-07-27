@@ -90,7 +90,7 @@ public static class TestClass
 		var objectCreationSyntax = SyntaxTree.GetRoot().DescendantNodes().Single(node => node.GetType() == type);
 		var namedTypeSymbol = (ITypeSymbol)SemanticModel.GetDeclaredSymbol(objectCreationSyntax)!;
 		
-		var definition = namedTypeSymbol.GetObjectDefinition(makePartial);
+		var definition = namedTypeSymbol.GetObjectDeclaration(makePartial);
 		
 		Assert.Equal(expectedDefinition, definition);
 	}
