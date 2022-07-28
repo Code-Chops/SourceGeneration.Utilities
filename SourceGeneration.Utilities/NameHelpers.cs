@@ -3,9 +3,9 @@
 /// <summary>
 /// Provides helpers for class (or interface) names.
 /// </summary>
-public static class ClassNameHelpers
+public static class NameHelpers
 {
-	public static string GetClassNameWithoutGenerics(string className)
+	public static string GetNameWithoutGenerics(string className)
 	{
 		var genericParameterIndex = className.IndexOf('<');
 		var classNameWithoutGenerics = genericParameterIndex <= 0 ? className : className.Substring(0, genericParameterIndex);

@@ -314,7 +314,7 @@ public static class TypeSymbolExtensions
 	public static bool HasEqualsOverride(this ITypeSymbol typeSymbol, bool falseForStructs = false)
 	{
 		// Technically this could match an overridden "new" Equals defined by a base type, but that is a nonsense scenario
-		var result = typeSymbol.GetMembers(nameof(Object.Equals)).OfType<IMethodSymbol>().Any(method => method.IsOverride && !method.IsStatic &&
+		var result = typeSymbol.GetMembers(nameof(Equals)).OfType<IMethodSymbol>().Any(method => method.IsOverride && !method.IsStatic &&
 			method.Arity == 0 && method.Parameters.Length == 1 && method.Parameters[0].Type.IsType<object>());
 
 		return result;
@@ -332,14 +332,14 @@ public static class TypeSymbolExtensions
 	/// <summary>
 	/// Returns whether the <see cref="ITypeSymbol"/> is annotated with the specified attribute.
 	/// </summary>
-	public static bool HasAttribute(this ITypeSymbol typeSymbol, string typeName, string containingNamespace, out AttributeData? attribute)
+	public static bool HasAttribute(this ITypeSymbol typeSymbol, string typeName, string containingNamespace, out AttributeData? attribute, int expectedGenericTypeParamCount = 0)
 	{
 		var alternativeTypeName = typeName.EndsWith("Attribute")
 			? typeName.Substring(0, typeName.Length - "Attribute".Length)
 			: $"{typeName}Attribute";
 
-		var result = typeSymbol.HasAttribute(attribute => attribute.IsType(typeName, containingNamespace), out attribute)
-			|| typeSymbol.HasAttribute(attribute => attribute.IsType(alternativeTypeName, containingNamespace), out attribute);
+		var result = typeSymbol.HasAttribute(attribute => attribute.IsType(typeName, containingNamespace), out attribute, expectedGenericTypeParamCount)
+			|| typeSymbol.HasAttribute(attribute => attribute.IsType(alternativeTypeName, containingNamespace), out attribute, expectedGenericTypeParamCount);
 
 		return result;
 	}
@@ -347,12 +347,20 @@ public static class TypeSymbolExtensions
 	/// <summary>
 	/// Returns whether the <see cref="ITypeSymbol"/> is annotated with the specified attribute.
 	/// </summary>
-	public static bool HasAttribute(this ITypeSymbol typeSymbol, Func<INamedTypeSymbol, bool> predicate, out AttributeData? attribute)
+	public static bool HasAttribute(this ITypeSymbol typeSymbol, Func<INamedTypeSymbol, bool> predicate, out AttributeData? attribute, int expectedGenericTypeParamCount = 0)
 	{
-		attribute = typeSymbol.GetAttributes().FirstOrDefault(attribute => attribute.AttributeClass is not null && predicate(attribute.AttributeClass));
+		attribute = typeSymbol.GetAttributes().FirstOrDefault(attribute => IsCorrectAttribute(attribute, predicate, expectedGenericTypeParamCount));
 		return attribute is not null;
 	}
 
+	private static bool IsCorrectAttribute(AttributeData attribute, Func<INamedTypeSymbol, bool> predicate, int expectedGenericTypeParamCount = 0)
+	{
+		if (attribute.AttributeClass is null || !predicate(attribute.AttributeClass)) return false;
+
+		var correctGenericTypeParamCount = (attribute.AttributeClass?.TypeParameters.Length ?? 0) == expectedGenericTypeParamCount;
+		return correctGenericTypeParamCount;
+	}
+	
 	/// <summary>
 	/// Returns whether the <see cref="ITypeSymbol"/> is annotated with the specified attribute.
 	/// </summary>
@@ -365,14 +373,14 @@ public static class TypeSymbolExtensions
 	/// <summary>
 	/// Returns whether the <see cref="ITypeSymbol"/> is annotated with the specified attribute.
 	/// </summary>
-	public static bool HasAttributes(this ITypeSymbol typeSymbol, string typeName, string containingNamespace, out IEnumerable<AttributeData> attributes)
+	public static bool HasAttributes(this ITypeSymbol typeSymbol, string typeName, string containingNamespace, out IEnumerable<AttributeData> attributes, int expectedGenericTypeParamCount = 0)
 	{
 		var alternativeTypeName = typeName.EndsWith("Attribute")
 			? typeName.Substring(0, typeName.Length - "Attribute".Length)
 			: $"{typeName}Attribute";
 
-		var result = typeSymbol.HasAttributes(attribute => attribute.IsType(typeName, containingNamespace), out attributes)
-			|| typeSymbol.HasAttributes(attribute => attribute.IsType(alternativeTypeName, containingNamespace), out attributes);
+		var result = typeSymbol.HasAttributes(attribute => attribute.IsType(typeName, containingNamespace), out attributes, expectedGenericTypeParamCount)
+			|| typeSymbol.HasAttributes(attribute => attribute.IsType(alternativeTypeName, containingNamespace), out attributes, expectedGenericTypeParamCount);
 
 		return result;
 	}
@@ -380,9 +388,10 @@ public static class TypeSymbolExtensions
 	/// <summary>
 	/// Returns whether the <see cref="ITypeSymbol"/> is annotated with the specified attribute.
 	/// </summary>
-	public static bool HasAttributes(this ITypeSymbol typeSymbol, Func<INamedTypeSymbol, bool> predicate, out IEnumerable<AttributeData> attributes)
+	public static bool HasAttributes(this ITypeSymbol typeSymbol, Func<INamedTypeSymbol, bool> predicate, out IEnumerable<AttributeData> attributes, int expectedGenericTypeParamCount = 0)
 	{
-		attributes = typeSymbol.GetAttributes().Where(attribute => attribute.AttributeClass is not null && predicate(attribute.AttributeClass));
+		attributes = typeSymbol.GetAttributes().Where(attribute => IsCorrectAttribute(attribute, predicate, expectedGenericTypeParamCount));
+
 		return attributes.Any();
 	}
 
