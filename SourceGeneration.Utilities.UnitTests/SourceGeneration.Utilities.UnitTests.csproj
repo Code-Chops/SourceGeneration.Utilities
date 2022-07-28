@@ -9,7 +9,6 @@
     <LangVersion>10</LangVersion>
 	<AssemblyName>CodeChops.SourceGeneration.Utilities.UnitTests</AssemblyName>
 	<RootNamespace>CodeChops.SourceGeneration.Utilities.UnitTests</RootNamespace>
-	<EnablePreviewFeatures>true</EnablePreviewFeatures>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<VersionPrefix>0.1.6</VersionPrefix>
-	<PackageReleaseNotes>Added extra generic parameter retrieval from attribute test.</PackageReleaseNotes>
+	<VersionPrefix>0.1.7</VersionPrefix>
+	<PackageReleaseNotes>Removed preview features.</PackageReleaseNotes>
 	<TargetFramework>netstandard2.0</TargetFramework>
 	<LangVersion>10</LangVersion>
   </PropertyGroup>
@@ -29,7 +29,6 @@ Contains utilities for easy implementation of source generators.
 	<Nullable>enable</Nullable>
 	<ImplicitUsings>enable</ImplicitUsings>
 	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	<EnablePreviewFeatures>true</EnablePreviewFeatures>
   </PropertyGroup>
 
   <!-- Creates local nuget packages if in release mode and environment variable LocalNuGetPackagesFolder is configured -->
