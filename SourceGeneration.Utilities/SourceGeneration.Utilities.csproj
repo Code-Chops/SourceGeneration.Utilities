@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<VersionPrefix>0.1.0</VersionPrefix>
-	<PackageReleaseNotes>Renamed GetObjectDefinition to GetObjectDeclaration.</PackageReleaseNotes>
+	<VersionPrefix>0.1.1</VersionPrefix>
+	<PackageReleaseNotes>Only release local package in release mode.</PackageReleaseNotes>
 	<TargetFramework>netstandard2.0</TargetFramework>
 	<LangVersion>10</LangVersion>
   </PropertyGroup>
@@ -32,13 +32,9 @@ Contains utilities for easy implementation of source generators.
 	<EnablePreviewFeatures>true</EnablePreviewFeatures>
   </PropertyGroup>
 
-  <!-- Removes local nuget packages, so the package will be replaced when it exists -->
-  <Target Name="RemoveNugetPackage" AfterTargets="Pack" Condition="'$(LocalNuGetPackagesFolder)' != null">
-  	<Exec Command="rmdir $(LocalNuGetPackagesFolder)\$(PackageId)\$(PackageVersion)\ /s /q" />
-  </Target>
-  <!-- Creates local nuget packages if environment variable LocalNuGetPackagesFolder is configured -->
-  <Target Name="AddNugetPackage" AfterTargets="Pack" Condition="'$(LocalNuGetPackagesFolder)' != null">
-  	<Exec Command="$(LocalNuGetPackagesFolder)\nuget.exe add $(OutputPath)..\$(PackageId).$(PackageVersion).nupkg -source $(LocalNuGetPackagesFolder)" />
+  <!-- Creates local nuget packages if in release mode and environment variable LocalNuGetPackagesFolder is configured -->
+  <Target Name="AddNugetPackage" AfterTargets="Pack" Condition="'$(Configuration)' == 'Release' AND '$(LocalNuGetPackagesFolder)' != null">
+	  <Exec Command="$(LocalNuGetPackagesFolder)\nuget.exe add $(OutputPath)..\$(PackageId).$(PackageVersion).nupkg -source $(LocalNuGetPackagesFolder)" />
   </Target>
 	
   <ItemGroup>
