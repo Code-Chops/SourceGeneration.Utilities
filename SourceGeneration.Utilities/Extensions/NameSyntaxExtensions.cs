@@ -6,7 +6,7 @@ public static class NameSyntaxExtensions
 	/// Checks if a name syntax has a specific attribute.
 	/// </summary>
 	/// <param name="expectedGenericTypeParams">Add these parameters to check if the generic type parameters are matching. Use NULL to match any value.</param>
-	public static bool HasAttributeName(this NameSyntax? name, string expectedName, CancellationToken cancellationToken, IEnumerable<string>? expectedGenericTypeParams = default)
+	public static bool HasAttributeName(this NameSyntax? name, string expectedName, CancellationToken cancellationToken, IEnumerable<string?>? expectedGenericTypeParams = default)
 	{
 		var attributeName = name.ExtractAttributeName(cancellationToken, out var genericTypeParams);
 
