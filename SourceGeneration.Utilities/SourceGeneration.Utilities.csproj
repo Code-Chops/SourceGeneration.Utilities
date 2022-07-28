@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<VersionPrefix>0.1.2</VersionPrefix>
-	<PackageReleaseNotes>Added attribute type parameter count check and unit tests.</PackageReleaseNotes>
+	<VersionPrefix>0.1.3</VersionPrefix>
+	<PackageReleaseNotes>Added wildcard for expectedGenericTypeParams.</PackageReleaseNotes>
 	<TargetFramework>netstandard2.0</TargetFramework>
 	<LangVersion>10</LangVersion>
   </PropertyGroup>
