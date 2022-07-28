@@ -323,9 +323,9 @@ public static class TypeSymbolExtensions
 	/// <summary>
 	/// Returns whether the <see cref="ITypeSymbol"/> is annotated with the specified attribute.
 	/// </summary>
-	public static bool HasAttribute<TAttribute>(this ITypeSymbol typeSymbol, out AttributeData? attribute)
+	public static bool HasAttribute<TAttribute>(this ITypeSymbol typeSymbol, out AttributeData? attribute, int expectedGenericTypeParamCount = 0)
 	{
-		var result = typeSymbol.HasAttribute(attribute => attribute.IsType<TAttribute>(), out attribute);
+		var result = typeSymbol.HasAttribute(attribute => attribute.IsType<TAttribute>(), out attribute, expectedGenericTypeParamCount);
 		return result;
 	}
 
@@ -364,9 +364,9 @@ public static class TypeSymbolExtensions
 	/// <summary>
 	/// Returns whether the <see cref="ITypeSymbol"/> is annotated with the specified attribute.
 	/// </summary>
-	public static bool HasAttributes<TAttribute>(this ITypeSymbol typeSymbol, out IEnumerable<AttributeData> attributes)
+	public static bool HasAttributes<TAttribute>(this ITypeSymbol typeSymbol, out IEnumerable<AttributeData> attributes, int expectedGenericTypeParamCount = 0)
 	{
-		var result = typeSymbol.HasAttributes(attribute => attribute.IsType<TAttribute>(), out attributes);
+		var result = typeSymbol.HasAttributes(attribute => attribute.IsType<TAttribute>(), out attributes, expectedGenericTypeParamCount);
 		return result;
 	}
 
@@ -391,7 +391,6 @@ public static class TypeSymbolExtensions
 	public static bool HasAttributes(this ITypeSymbol typeSymbol, Func<INamedTypeSymbol, bool> predicate, out IEnumerable<AttributeData> attributes, int expectedGenericTypeParamCount = 0)
 	{
 		attributes = typeSymbol.GetAttributes().Where(attribute => IsCorrectAttribute(attribute, predicate, expectedGenericTypeParamCount));
-
 		return attributes.Any();
 	}
 

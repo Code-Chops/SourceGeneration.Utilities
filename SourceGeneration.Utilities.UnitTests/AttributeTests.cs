@@ -2,19 +2,19 @@
 
 public class AttributeTests : TestsBase
 {
-	protected override SyntaxTree SyntaxTree { get; } = CSharpSyntaxTree.ParseText($@"
+	protected override SyntaxTree SyntaxTree { get; } = CSharpSyntaxTree.ParseText(@"
 using System;
 
 namespace CodeChops.Test;
 
-public class AttributeWithoutGenericTypeAttribute : Attribute {{ }}
-public class AttributeWithGenericTypeAttribute<T> : Attribute {{ }}
+public class AttributeWithoutGenericTypeAttribute : Attribute { }
+public class AttributeWithGenericTypeAttribute<T> : Attribute { }
 
-[AttributeWithoutGenericTypeAttribute]
-[AttributeWithGenericTypeAttribute<int>]
+[AttributeWithoutGenericType]
+[AttributeWithGenericType<int>]
 private partial struct TestClass
-{{
-}}
+{
+}
 ");
 	
 	private StructDeclarationSyntax StructDeclaration { get; }
@@ -29,17 +29,17 @@ private partial struct TestClass
 	{
 		var attribute = this.StructDeclaration.AttributeLists
 			.SelectMany(attributeList => attributeList.Attributes)
-			.Select(attribute => attribute.Name.HasAttributeName("AttributeWithoutGenericType", CancellationToken.None));
+			.SingleOrDefault(attribute => attribute.Name.HasAttributeName("AttributeWithoutGenericType", CancellationToken.None));
 		
 		Assert.NotNull(attribute);
 	}
-
+	
 	[Fact]
 	public void Attribute_WithGenericParameter_IsFound_ViaSyntax()
 	{
 		var attribute = this.StructDeclaration.AttributeLists
 			.SelectMany(attributeList => attributeList.Attributes)
-			.SingleOrDefault(attribute => attribute.Name.HasAttributeName("AttributeWithGenericType", CancellationToken.None, expectedGenericTypeParams: new [] { "int"}));
+			.SingleOrDefault(attribute => attribute.Name.HasAttributeName("AttributeWithGenericType", CancellationToken.None));
 		
 		Assert.NotNull(attribute);
 	}

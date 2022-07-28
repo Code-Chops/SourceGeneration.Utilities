@@ -5,24 +5,39 @@ public static class NameSyntaxExtensions
 	/// <summary>
 	/// Checks if a name syntax has a specific attribute.
 	/// </summary>
-	/// <param name="expectedGenericTypeParams">Add these parameters to check if the generic type parameters are matching. Use NULL to match any value.</param>
-	public static bool HasAttributeName(this NameSyntax? name, string expectedName, CancellationToken cancellationToken, IEnumerable<string?>? expectedGenericTypeParams = default)
+	public static bool HasAttributeName(this NameSyntax? name, string expectedName, CancellationToken cancellationToken)
 	{
+		var expectedGenericTypeParams = name is GenericNameSyntax genericName   
+			? genericName.TypeArgumentList.Arguments.Select(arg => arg.ToString())
+			: null;
+		
 		var attributeName = name.ExtractAttributeName(cancellationToken, out var genericTypeParams);
-
-		if (attributeName is null) return false;
-		if (attributeName == expectedName) return true;
 		
-		var alternativeAttributeName = attributeName.EndsWith("Attribute")
-		   ? attributeName.Substring(0, attributeName.Length - "Attribute".Length)
-		   : $"{attributeName}Attribute";
-
-		if (alternativeAttributeName != expectedName) return false;
-
-		if (expectedGenericTypeParams is null || !expectedGenericTypeParams.Any()) return true;
+		var hasAttributeName = NameIsCorrect() && HasCorrectGenericParameters();
+		return hasAttributeName;
 		
-		var correctParams = expectedGenericTypeParams.All(param => param is null || genericTypeParams.Contains(param));
-		return correctParams;
+		
+		bool NameIsCorrect()
+		{
+			if (attributeName is null) return false;
+			if (attributeName == expectedName) return true;
+		
+			var alternativeAttributeName = attributeName.EndsWith("Attribute")
+				? attributeName.Substring(0, attributeName.Length - "Attribute".Length)
+				: $"{attributeName}Attribute";
+
+			return alternativeAttributeName == expectedName;
+		}
+
+		bool HasCorrectGenericParameters()
+		{
+			if (expectedGenericTypeParams is null) return true;
+			
+			if (genericTypeParams.Count() != expectedGenericTypeParams.Count()) return false;
+		
+			var correctParams = expectedGenericTypeParams.All(param => param is null || genericTypeParams.Contains(param));
+			return correctParams;
+		}
 	}
 
 	/// <summary>
