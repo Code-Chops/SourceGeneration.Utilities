@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<VersionPrefix>0.1.7</VersionPrefix>
-	<PackageReleaseNotes>Removed preview features.</PackageReleaseNotes>
+	<VersionPrefix>0.1.8</VersionPrefix>
+	<PackageReleaseNotes>Cleaned up project files.</PackageReleaseNotes>
 	<TargetFramework>netstandard2.0</TargetFramework>
 	<LangVersion>10</LangVersion>
   </PropertyGroup>
@@ -50,16 +50,14 @@ Contains utilities for easy implementation of source generators.
   	<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup>
-  	<!-- CA1822: Instance member does not access instance data and can be marked as static -->
-  	<!-- CS1573: Undocumented public symbol while -doc compiler option is used -->
-  	<!-- CS1591: Missing XML comment for publicly visible type -->
-  	<!-- CA1816: Dispose() should call GC.SuppressFinalize()-->
-  	<NoWarn>CA1822,CS1573,CS1591,CA1816</NoWarn>
-  	<DebugType>none</DebugType>
-  </PropertyGroup>
+  <ItemGroup>
+	<InternalsVisibleTo Include="$(AssemblyName).UnitTests" />
+  </ItemGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DebugType>portable</DebugType>
+  <PropertyGroup>
+  	<!-- CS1591: Missing XML comment for publicly visible type -->
+  	<!-- CS1573: Undocumented public symbol while -doc compiler option is used -->
+  	<!-- CA1822: Instance member does not access instance data and can be marked as static -->
+  	<NoWarn>CS1591,CS1573,CA1822</NoWarn>
   </PropertyGroup>
 </Project>	

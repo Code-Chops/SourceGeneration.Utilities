@@ -25,4 +25,11 @@
   <ItemGroup>
     <ProjectReference Include="..\SourceGeneration.Utilities\SourceGeneration.Utilities.csproj" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <!-- CS1591: Missing XML comment for publicly visible type -->
+    <!-- CS1573: Undocumented public symbol while -doc compiler option is used -->
+    <!-- CA1822: Instance member does not access instance data and can be marked as static -->
+    <NoWarn>CS1591,CS1573,CA1822</NoWarn>
+  </PropertyGroup>
 </Project>
