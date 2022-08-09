@@ -1,35 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <IsPackable>false</IsPackable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <AnalysisLevel>latest</AnalysisLevel>
-    <LangVersion>10</LangVersion>
-	<AssemblyName>CodeChops.SourceGeneration.Utilities.UnitTests</AssemblyName>
-	<RootNamespace>CodeChops.SourceGeneration.Utilities.UnitTests</RootNamespace>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <IsPackable>false</IsPackable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AnalysisLevel>latest</AnalysisLevel>
+        <LangVersion>10</LangVersion>
+        <AssemblyName>CodeChops.SourceGeneration.Utilities.UnitTests</AssemblyName>
+        <RootNamespace>CodeChops.SourceGeneration.Utilities.UnitTests</RootNamespace>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
-    <PackageReference Include="System.Reflection.Metadata" Version="6.0.1" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+        <PackageReference Include="System.Reflection.Metadata" Version="6.0.1" />
+        <PackageReference Include="xunit" Version="2.4.2" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SourceGeneration.Utilities\SourceGeneration.Utilities.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\SourceGeneration.Utilities\SourceGeneration.Utilities.csproj" />
+    </ItemGroup>
 
-  <PropertyGroup>
-    <!-- CS1591: Missing XML comment for publicly visible type -->
-    <!-- CS1573: Undocumented public symbol while -doc compiler option is used -->
-    <!-- CA1822: Instance member does not access instance data and can be marked as static -->
-    <NoWarn>CS1591,CS1573,CA1822</NoWarn>
-  </PropertyGroup>
+    <PropertyGroup>
+        <!-- CS1591: Missing XML comment for publicly visible type -->
+        <!-- CS1573: Undocumented public symbol while -doc compiler option is used -->
+        <!-- CA1822: Instance member does not access instance data and can be marked as static -->
+        <NoWarn>CS1591,CS1573,CA1822</NoWarn>
+    </PropertyGroup>
 </Project>

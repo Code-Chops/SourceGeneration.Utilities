@@ -84,7 +84,7 @@ public static class TypeSymbolExtensions
 	private static bool IsType(this ITypeSymbol typeSymbol, ReadOnlySpan<char> typeName, ReadOnlySpan<char> containingNamespace, bool? isGenericType = null)
 	{
 		var result = typeSymbol.Name.AsSpan().Equals(typeName, StringComparison.Ordinal) &&
-			typeSymbol.ContainingNamespace.HasFullName(containingNamespace);
+		             typeSymbol.ContainingNamespace.HasFullName(containingNamespace);
 
 		if (result && isGenericType is not null)
 			result = typeSymbol is INamedTypeSymbol namedTypeSymbol && namedTypeSymbol.IsGenericType == isGenericType.Value;
@@ -158,14 +158,14 @@ public static class TypeSymbolExtensions
 			typeSymbol = underlyingType;
 
 		var result = typeSymbol.IsType<byte>()
-			|| typeSymbol.IsType<sbyte>()
-			|| typeSymbol.IsType<ushort>()
-			|| typeSymbol.IsType<short>()
-			|| typeSymbol.IsType<uint>()
-			|| typeSymbol.IsType<int>()
-			|| typeSymbol.IsType<ulong>()
-			|| typeSymbol.IsType<long>()
-			|| (includeDecimal && typeSymbol.IsType<decimal>());
+		             || typeSymbol.IsType<sbyte>()
+		             || typeSymbol.IsType<ushort>()
+		             || typeSymbol.IsType<short>()
+		             || typeSymbol.IsType<uint>()
+		             || typeSymbol.IsType<int>()
+		             || typeSymbol.IsType<ulong>()
+		             || typeSymbol.IsType<long>()
+		             || (includeDecimal && typeSymbol.IsType<decimal>());
 
 		return result;
 	}
@@ -315,7 +315,7 @@ public static class TypeSymbolExtensions
 	{
 		// Technically this could match an overridden "new" Equals defined by a base type, but that is a nonsense scenario
 		var result = typeSymbol.GetMembers(nameof(Equals)).OfType<IMethodSymbol>().Any(method => method.IsOverride && !method.IsStatic &&
-			method.Arity == 0 && method.Parameters.Length == 1 && method.Parameters[0].Type.IsType<object>());
+		                                                                                         method.Arity == 0 && method.Parameters.Length == 1 && method.Parameters[0].Type.IsType<object>());
 
 		return result;
 	}
@@ -339,7 +339,7 @@ public static class TypeSymbolExtensions
 			: $"{typeName}Attribute";
 
 		var result = typeSymbol.HasAttribute(attribute => attribute.IsType(typeName, containingNamespace), out attribute, expectedGenericTypeParamCount)
-			|| typeSymbol.HasAttribute(attribute => attribute.IsType(alternativeTypeName, containingNamespace), out attribute, expectedGenericTypeParamCount);
+		             || typeSymbol.HasAttribute(attribute => attribute.IsType(alternativeTypeName, containingNamespace), out attribute, expectedGenericTypeParamCount);
 
 		return result;
 	}
@@ -380,7 +380,7 @@ public static class TypeSymbolExtensions
 			: $"{typeName}Attribute";
 
 		var result = typeSymbol.HasAttributes(attribute => attribute.IsType(typeName, containingNamespace), out attributes, expectedGenericTypeParamCount)
-			|| typeSymbol.HasAttributes(attribute => attribute.IsType(alternativeTypeName, containingNamespace), out attributes, expectedGenericTypeParamCount);
+		             || typeSymbol.HasAttributes(attribute => attribute.IsType(alternativeTypeName, containingNamespace), out attributes, expectedGenericTypeParamCount);
 
 		return result;
 	}

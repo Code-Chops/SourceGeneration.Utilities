@@ -37,7 +37,7 @@ public static class NamespaceSymbolExtensions
 			// Or there is no 'start of string' or dot right before it
 			// Then the names mismatch
 			if (!fullName.EndsWith(namespaceSymbol.Name.AsSpan(), StringComparison.Ordinal) ||
-				!(fullName.Length == length || fullName[fullName.Length - length - 1] == '.'))
+			    !(fullName.Length == length || fullName[fullName.Length - length - 1] == '.'))
 			{
 				return false;
 			}

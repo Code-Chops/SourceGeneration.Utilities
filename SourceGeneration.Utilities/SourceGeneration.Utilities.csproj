@@ -1,63 +1,63 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-	<VersionPrefix>0.1.8</VersionPrefix>
-	<PackageReleaseNotes>Cleaned up project files.</PackageReleaseNotes>
-	<TargetFramework>netstandard2.0</TargetFramework>
-	<LangVersion>10</LangVersion>
-  </PropertyGroup>
-	
-  <PropertyGroup>
-   	<Title>CodeChops.SourceGeneration.Utilities</Title>
-    <AssemblyName>CodeChops.SourceGeneration.Utilities</AssemblyName>
-    <RootNamespace>CodeChops.SourceGeneration.Utilities</RootNamespace>
-  	<PackageId>CodeChops.SourceGeneration.Utilities</PackageId>
-	<Authors>CodeChops (@Code-Chops), Max Bergman</Authors>
-    <Company>CodeChops</Company>
-	<PackageProjectUrl>https://github.com/code-chops/SourceGeneration.Utilities</PackageProjectUrl>
-	<PackageTags>CodeChops;CodeChops.SourceGeneration.Utilities;CodeChops.SourceGeneration.Utilities;SourceGeneration;Utilities;Source generation;Source generation utilities;</PackageTags>
-	<RepositoryUrl>https://github.com/code-chops/SourceGeneration.Utilities</RepositoryUrl>
-	<RepositoryType>Git</RepositoryType>
-	<PublishRepositoryUrl>true</PublishRepositoryUrl>
-	<PackageIcon>icon.png</PackageIcon>
-	<PackageLicenseFile>LICENSE</PackageLicenseFile>
-	<Copyright>Copyright (c) CodeChops $([System.DateTime]::Now.ToString(yyyy))</Copyright>
-	<Description>
-Contains utilities for easy implementation of source generators.
-	</Description>
-	<AnalysisLevel>latest</AnalysisLevel>
-	<Nullable>enable</Nullable>
-	<ImplicitUsings>enable</ImplicitUsings>
-	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-  </PropertyGroup>
+    <PropertyGroup>
+        <VersionPrefix>0.1.9</VersionPrefix>
+        <PackageReleaseNotes>Added TypeDeclarationSyntaxExtensions and tests (ClassGenericConstraints).</PackageReleaseNotes>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>10</LangVersion>
+    </PropertyGroup>
 
-  <!-- Creates local nuget packages if in release mode and environment variable LocalNuGetPackagesFolder is configured -->
-  <Target Name="AddNugetPackage" AfterTargets="Pack" Condition="'$(Configuration)' == 'Release' AND '$(LocalNuGetPackagesFolder)' != null">
-	  <Exec Command="$(LocalNuGetPackagesFolder)\nuget.exe add $(OutputPath)..\$(PackageId).$(PackageVersion).nupkg -source $(LocalNuGetPackagesFolder)" />
-  </Target>
-	
-  <ItemGroup>
-	<None Include="Properties\LICENSE" Pack="true" PackagePath="" />
-	<None Include="Properties\icon.png" Pack="true" Visible="true" PackagePath="" />
-  </ItemGroup>
-	
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" PrivateAssets="all" />
-  </ItemGroup>
+    <PropertyGroup>
+        <Title>CodeChops.SourceGeneration.Utilities</Title>
+        <AssemblyName>CodeChops.SourceGeneration.Utilities</AssemblyName>
+        <RootNamespace>CodeChops.SourceGeneration.Utilities</RootNamespace>
+        <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>
+        <Authors>CodeChops (@Code-Chops), Max Bergman</Authors>
+        <Company>CodeChops</Company>
+        <PackageProjectUrl>https://github.com/code-chops/SourceGeneration.Utilities</PackageProjectUrl>
+        <PackageTags>CodeChops;CodeChops.SourceGeneration.Utilities;CodeChops.SourceGeneration.Utilities;SourceGeneration;Utilities;Source generation;Source generation utilities;</PackageTags>
+        <RepositoryUrl>https://github.com/code-chops/SourceGeneration.Utilities</RepositoryUrl>
+        <RepositoryType>Git</RepositoryType>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <Copyright>Copyright (c) CodeChops $([System.DateTime]::Now.ToString(yyyy))</Copyright>
+        <Description>
+            Contains utilities for easy implementation of source generators.
+        </Description>
+        <AnalysisLevel>latest</AnalysisLevel>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
 
-  <PropertyGroup>
-  	<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-  </PropertyGroup>
+    <!-- Creates local nuget packages if in release mode and environment variable LocalNuGetPackagesFolder is configured -->
+    <Target Name="AddNugetPackage" AfterTargets="Pack" Condition="'$(Configuration)' == 'Release' AND '$(LocalNuGetPackagesFolder)' != null">
+        <Exec Command="$(LocalNuGetPackagesFolder)\nuget.exe add $(OutputPath)..\$(PackageId).$(PackageVersion).nupkg -source $(LocalNuGetPackagesFolder)" />
+    </Target>
 
-  <ItemGroup>
-	<InternalsVisibleTo Include="$(AssemblyName).UnitTests" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="Properties\LICENSE" Pack="true" PackagePath="" />
+        <None Include="Properties\icon.png" Pack="true" Visible="true" PackagePath="" />
+    </ItemGroup>
 
-  <PropertyGroup>
-  	<!-- CS1591: Missing XML comment for publicly visible type -->
-  	<!-- CS1573: Undocumented public symbol while -doc compiler option is used -->
-  	<!-- CA1822: Instance member does not access instance data and can be marked as static -->
-  	<NoWarn>CS1591,CS1573,CA1822</NoWarn>
-  </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" PrivateAssets="all" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="$(AssemblyName).UnitTests" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <!-- CS1591: Missing XML comment for publicly visible type -->
+        <!-- CS1573: Undocumented public symbol while -doc compiler option is used -->
+        <!-- CA1822: Instance member does not access instance data and can be marked as static -->
+        <NoWarn>CS1591,CS1573,CA1822</NoWarn>
+    </PropertyGroup>
 </Project>	
