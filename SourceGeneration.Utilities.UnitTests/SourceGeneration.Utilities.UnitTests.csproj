@@ -1,19 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <IsPackable>false</IsPackable>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <AnalysisLevel>latest</AnalysisLevel>
-        <LangVersion>10</LangVersion>
+    <PropertyGroup Label="Main">
         <AssemblyName>CodeChops.SourceGeneration.Utilities.UnitTests</AssemblyName>
         <RootNamespace>CodeChops.SourceGeneration.Utilities.UnitTests</RootNamespace>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>10</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
+    <ItemGroup Label="ProjectReferences">
+        <ProjectReference Include="..\SourceGeneration.Utilities\SourceGeneration.Utilities.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup Label="PackageReferences">
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.0" />
         <PackageReference Include="System.Reflection.Metadata" Version="6.0.1" />
         <PackageReference Include="xunit" Version="2.4.2" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
@@ -22,14 +24,4 @@
         </PackageReference>
     </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\SourceGeneration.Utilities\SourceGeneration.Utilities.csproj" />
-    </ItemGroup>
-
-    <PropertyGroup>
-        <!-- CS1591: Missing XML comment for publicly visible type -->
-        <!-- CS1573: Undocumented public symbol while -doc compiler option is used -->
-        <!-- CA1822: Instance member does not access instance data and can be marked as static -->
-        <NoWarn>CS1591,CS1573,CA1822</NoWarn>
-    </PropertyGroup>
 </Project>
