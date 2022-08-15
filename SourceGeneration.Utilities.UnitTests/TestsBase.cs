@@ -10,7 +10,7 @@ public abstract class TestsBase
 	{
 		var mscorlib = MetadataReference.CreateFromFile(typeof(object).Assembly.Location);
 		var compilation = CSharpCompilation.Create(
-			assemblyName: nameof(TypeSymbolTests),
+			assemblyName: nameof(TestsBase),
 			syntaxTrees: new[] { this.SyntaxTree }, 
 			references: new[] { mscorlib });
 

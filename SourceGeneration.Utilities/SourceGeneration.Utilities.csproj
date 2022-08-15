@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <VersionPrefix>0.1.10</VersionPrefix>
-        <PackageReleaseNotes>Cleanup project files.</PackageReleaseNotes>
+        <Version>0.1.11</Version>
+        <PackageReleaseNotes>Added GetNameWithGenerics.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>
@@ -46,6 +46,14 @@
     <ItemGroup Label="PackageReferences">
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" PrivateAssets="all" />
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" PrivateAssets="all" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Compile Remove="Compatibility\Range.cs" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Compatibility" />
     </ItemGroup>
     
 </Project>	
