@@ -5,7 +5,7 @@ namespace CodeChops.SourceGeneration.Utilities;
 public static class FileNameHelpers
 {
 	/// <summary>
-	/// Removes the root namespace of the source assembly from the file name.
+	/// Replaces invalid file name characters to '_'. Removes the root namespace of the source assembly from the file name.
 	/// <para>
 	/// For this to work, add: &lt;CompilerVisibleProperty Include="RootNamespace"/&gt; to an ItemGroup in the source assembly.
 	/// </para>
@@ -13,6 +13,20 @@ public static class FileNameHelpers
 	/// <param name="fileName">The file name without the extension.</param>
 	public static string GetFileName(string fileName, AnalyzerConfigOptionsProvider configOptionsProvider)
 	{
+		var buffer = new char[fileName.Length];
+		var i = 0;
+		var invalidCharacters = Path.GetInvalidFileNameChars();
+
+		foreach (var c in fileName)
+		{
+			var newCharacter = c;
+			if (invalidCharacters.Contains(c)) newCharacter = '_';
+			buffer[i] = newCharacter;
+			i++;
+		}
+
+		fileName = new String(buffer);
+		
 		configOptionsProvider.GlobalOptions.TryGetValue("build_property.RootNamespace", out var rootNamespace);
 		
 		if (rootNamespace is not null && fileName.Substring(0, rootNamespace.Length) == rootNamespace)

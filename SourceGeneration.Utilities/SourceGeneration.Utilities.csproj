@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.2.0</Version>
-        <PackageReleaseNotes>Added GetFileName.</PackageReleaseNotes>
+        <Version>0.2.1</Version>
+        <PackageReleaseNotes>Removes invalid file name characters.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>
