@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.2.1</Version>
-        <PackageReleaseNotes>Removes invalid file name characters.</PackageReleaseNotes>
+        <Version>0.3.0</Version>
+        <PackageReleaseNotes>Enhanced comments for FileNameHelper and now generates XML documentation.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>
@@ -26,6 +26,11 @@
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <Copyright>Copyright (c) CodeChops $([System.DateTime]::Now.ToString(yyyy))</Copyright>
         <Description>Utilities for easy implementation of source generators.</Description>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+        <NoWarn>
+            1591, <!-- Missing XML comment for publicly visible type or member -->
+            1573, <!-- Parameter has no matching param tag in the XML comment -->
+        </NoWarn>
     </PropertyGroup>
 
     <!-- Creates local nuget packages if in release mode and environment variable LocalNuGetPackagesFolder is configured -->

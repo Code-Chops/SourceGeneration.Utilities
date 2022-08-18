@@ -5,14 +5,23 @@ namespace CodeChops.SourceGeneration.Utilities;
 public static class FileNameHelpers
 {
 	/// <summary>
-	/// Replaces invalid file name characters to '_'. Removes the root namespace of the source assembly from the file name.
+	/// <list type="bullet">
+	/// <item>Removes 'global::' from the start of the name if it exists.</item>
+	/// <item>Replaces invalid file name characters to '_'.</item>
+	/// <item>Removes the root namespace of the source assembly from the start file name.</item>
+	/// <item>Adds suffix '.g.cs' to the file name, if needed.</item>
+	/// </list>
 	/// <para>
-	/// For this to work, add: &lt;CompilerVisibleProperty Include="RootNamespace"/&gt; to an ItemGroup in the source assembly.
+	/// For this to work, add: &lt;CompilerVisibleProperty Include="RootNamespace"/&gt; to an ItemGroup in the project file of the source generator.
 	/// </para>
 	/// </summary>
 	/// <param name="fileName">The file name without the extension.</param>
 	public static string GetFileName(string fileName, AnalyzerConfigOptionsProvider configOptionsProvider)
 	{
+		fileName = fileName.StartsWith("global::") 
+			? fileName.Substring(8) 
+			: fileName;
+		
 		var buffer = new char[fileName.Length];
 		var i = 0;
 		var invalidCharacters = Path.GetInvalidFileNameChars();
@@ -32,6 +41,8 @@ public static class FileNameHelpers
 		if (rootNamespace is not null && fileName.Substring(0, rootNamespace.Length) == rootNamespace)
 			fileName = fileName.Substring(rootNamespace.Length + 1);
 
-		return $"{fileName}.g.cs";
+		return fileName.EndsWith(".cs")
+			? fileName 
+			: $"{fileName}.g.cs";
 	}
 }
