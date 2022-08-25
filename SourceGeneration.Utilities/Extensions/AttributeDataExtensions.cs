@@ -32,17 +32,22 @@ public static class AttributeDataExtensions
 	/// <summary>
 	/// Tries to get the value of the attribute argument as a string.
 	/// </summary>
-    /// <typeparam name="T">The type of the argument parameter.</typeparam>
+	/// <typeparam name="T">The type of the argument parameter.</typeparam>
 	/// <returns>The attribute argument as <typeparamref name="T"/>. Returns the default value if the argument is not provided or null.</returns>
-    /// <exception cref="InvalidCastException">When the argument cannot be cast to <typeparamref name="T"/></exception>
+	/// <exception cref="InvalidCastException">When the argument cannot be cast to <typeparamref name="T"/></exception>
 	public static T GetArgument<T>(this AttributeData attribute, string parameterName, T defaultValue)
-    {
-	    if (!attribute.TryGetArguments(out var argumentConstantByNames) || !argumentConstantByNames!.TryGetValue(parameterName, out var argument) || argument.Value is null) 
-		    return defaultValue;
-	    
-	    if (argument.Value is not T value)
-	        throw new InvalidCastException($"Unable to cast value ({argument.Value}) of \"{parameterName}\" to {typeof(T).Name}, from attribute for {attribute.AttributeClass?.Name}.");
+	{
+		if (!attribute.TryGetArguments(out var argumentConstantByNames) || !argumentConstantByNames!.TryGetValue(parameterName, out var argument) || argument.Value is null) 
+			return defaultValue;
 
-        return value;
-    }
+		if (argument.Value is not T value)
+		{
+			if (typeof(T).IsEnum)
+				return (T)argument.Value;
+		        
+			throw new InvalidCastException($"Unable to cast value ({argument.Value}) of \"{parameterName}\" to {typeof(T).Name}, from attribute for {attribute.AttributeClass?.Name}.");
+		}
+
+		return value;
+	}
 }
