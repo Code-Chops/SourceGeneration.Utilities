@@ -35,7 +35,7 @@ public static class AttributeDataExtensions
     /// <typeparam name="T">The type of the argument parameter.</typeparam>
 	/// <returns>The attribute argument as <typeparamref name="T"/>. Returns the default value if the argument is not provided or null.</returns>
     /// <exception cref="InvalidCastException">When the argument cannot be cast to <typeparamref name="T"/></exception>
-	public static T GetAttributeArgument<T>(AttributeData attribute, string parameterName, T defaultValue)
+	public static T GetAttributeArgument<T>(this AttributeData attribute, string parameterName, T defaultValue)
     {
 	    if (!attribute.TryGetArguments(out var argumentConstantByNames) || !argumentConstantByNames!.TryGetValue(parameterName, out var argument) || argument.Value is null) 
 		    return defaultValue;
