@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.3.5</Version>
-        <PackageReleaseNotes>Add enum support for GetArgument.</PackageReleaseNotes>
+        <Version>0.3.6</Version>
+        <PackageReleaseNotes>Fixed GetFileName bug.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>

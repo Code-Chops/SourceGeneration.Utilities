@@ -38,7 +38,7 @@ public static class FileNameHelpers
 		
 		configOptionsProvider.GlobalOptions.TryGetValue("build_property.RootNamespace", out var rootNamespace);
 		
-		if (rootNamespace is not null && fileName.Substring(0, rootNamespace.Length) == rootNamespace)
+		if (rootNamespace is not null && fileName.Length > rootNamespace.Length && fileName.Substring(0, rootNamespace.Length) == rootNamespace)
 			fileName = fileName.Substring(rootNamespace.Length + 1);
 
 		return fileName.EndsWith(".cs")
