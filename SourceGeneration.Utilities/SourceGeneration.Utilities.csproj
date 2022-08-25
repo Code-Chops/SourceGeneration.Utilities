@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.3.2</Version>
-        <PackageReleaseNotes>Changed GetAttributeArgument to extensions method.</PackageReleaseNotes>
+        <Version>0.3.3</Version>
+        <PackageReleaseNotes>Changed name of GetAttributeArgument to GetArgument.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>
