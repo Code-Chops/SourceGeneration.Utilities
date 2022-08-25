@@ -41,7 +41,7 @@ public static class AttributeDataExtensions
 		    return defaultValue;
 	    
 	    if (argument.Value is not T value)
-	        throw new InvalidCastException($"Unable to cast value of \"{parameterName}\" to {typeof(T).Name}, from attribute for {attribute.AttributeClass?.Name}.");
+	        throw new InvalidCastException($"Unable to cast value ({argument.Value}) of \"{parameterName}\" to {typeof(T).Name}, from attribute for {attribute.AttributeClass?.Name}.");
 
         return value;
     }
