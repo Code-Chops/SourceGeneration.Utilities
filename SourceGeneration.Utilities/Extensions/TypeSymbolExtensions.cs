@@ -502,9 +502,9 @@ public static class TypeSymbolExtensions
 	public static string GetObjectDeclaration(this ITypeSymbol typeSymbol, bool includePartial = true)
 	{
 		var accessibility = typeSymbol.DeclaredAccessibility.ToString().ToLowerInvariant();
-		var staticOrEmpty = typeSymbol.IsStatic ? "static " : "";
-		var abstractOrEmpty = typeSymbol.IsAbstract && typeSymbol.TypeKind == TypeKind.Class ? "abstract " : "";
-		var partialOrEmpty = includePartial && typeSymbol.TypeKind != TypeKind.Enum ? "partial " : "";
+		var staticOrEmpty = typeSymbol.IsStatic ? "static " : null;
+		var abstractOrEmpty = typeSymbol.IsAbstract && typeSymbol.TypeKind == TypeKind.Class ? "abstract " : null;
+		var partialOrEmpty = includePartial && typeSymbol.TypeKind != TypeKind.Enum ? "partial " : null;
 		
 		var definition = $"{accessibility} {staticOrEmpty}{abstractOrEmpty}{partialOrEmpty}{typeSymbol.GetClassTypeName()}";
 

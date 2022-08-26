@@ -30,24 +30,45 @@ public static class AttributeDataExtensions
 	}
 	
 	/// <summary>
-	/// Tries to get the value of the attribute argument as a string.
+	/// Gets the value of the attribute argument, or the provided default value if the argument was not provided.
 	/// </summary>
 	/// <typeparam name="T">The type of the argument parameter.</typeparam>
-	/// <returns>The attribute argument as <typeparamref name="T"/>. Returns the default value if the argument is not provided or null.</returns>
-	/// <exception cref="InvalidCastException">When the argument cannot be cast to <typeparamref name="T"/></exception>
-	public static T GetArgument<T>(this AttributeData attribute, string parameterName, T defaultValue)
+	/// <returns>The attribute argument as <typeparamref name="T"/> or the default value if the argument is not provided.</returns>
+	/// <exception cref="InvalidCastException">When the argument cannot be casted to <typeparamref name="T"/></exception>
+	public static T GetArgumentOrDefault<T>(this AttributeData attribute, string parameterName, T defaultValue)
 	{
-		if (!attribute.TryGetArguments(out var argumentConstantByNames) || !argumentConstantByNames!.TryGetValue(parameterName, out var argument) || argument.Value is null) 
+		if (!attribute.TryGetArgument<T>(parameterName, out var argument)) 
 			return defaultValue;
 
-		if (argument.Value is not T value)
+		return argument!;
+	}
+	
+	/// <summary>
+	/// Tries to get the value of the attribute argument.
+	/// </summary>
+	/// <typeparam name="T">The type of the argument parameter.</typeparam>
+	/// <returns>True if argument is retrieved.</returns>
+	/// <exception cref="InvalidCastException">When the argument cannot be casted to <typeparamref name="T"/></exception>
+	public static bool TryGetArgument<T>(this AttributeData attribute, string parameterName, out T? argument)
+	{
+		if (!attribute.TryGetArguments(out var argumentConstantByNames) || !argumentConstantByNames!.TryGetValue(parameterName, out var typedConstant) || typedConstant.Value is null)
 		{
-			if (typeof(T).IsEnum)
-				return (T)argument.Value;
-		        
-			throw new InvalidCastException($"Unable to cast value ({argument.Value}) of \"{parameterName}\" to {typeof(T).Name}, from attribute for {attribute.AttributeClass?.Name}.");
+			argument = default;
+			return false;
 		}
 
-		return value;
+		if (typedConstant.Value is not T value)
+		{
+			if (typeof(T).IsEnum)
+			{
+				argument = (T)typedConstant.Value;
+				return true;
+			}
+		        
+			throw new InvalidCastException($"Unable to cast value ({typedConstant.Value}) of \"{parameterName}\" to {typeof(T).Name}, from attribute for {attribute.AttributeClass?.Name}.");
+		}
+
+		argument = value;
+		return true;
 	}
 }
