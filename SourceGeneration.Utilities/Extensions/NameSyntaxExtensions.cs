@@ -44,7 +44,7 @@ public static class NameSyntaxExtensions
 	/// Extracts the attribute name from the name syntax.
 	/// </summary>
 	/// <returns>The attribute name</returns>
-	public static string? ExtractAttributeName(this NameSyntax? name, CancellationToken cancellationToken, out IEnumerable<string> genericTypeParams)
+	public static string? ExtractAttributeName(this NameSyntax? name, CancellationToken cancellationToken, out string[] genericTypeParams)
 	{
 		while (name != null && !cancellationToken.IsCancellationRequested)
 		{
@@ -59,7 +59,7 @@ public static class NameSyntaxExtensions
 					return identifierName.Identifier.Text;
 
 				case GenericNameSyntax genericNameSyntax:
-					genericTypeParams = genericNameSyntax.TypeArgumentList.Arguments.Select(argument => argument.ToString());
+					genericTypeParams = genericNameSyntax.TypeArgumentList.Arguments.Select(argument => argument.ToString()).ToArray();
 					return genericNameSyntax.Identifier.Text;
 				
 				default:

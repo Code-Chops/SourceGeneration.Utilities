@@ -2,12 +2,13 @@
 
 public abstract class TestsBase
 {
-	protected abstract SyntaxTree SyntaxTree { get; }
+	private SyntaxTree SyntaxTree { get; }
 	
 	protected SemanticModel SemanticModel { get; } 
 	
-	protected TestsBase()
+	protected TestsBase(SyntaxTree syntaxTree)
 	{
+		this.SyntaxTree = syntaxTree;
 		var mscorlib = MetadataReference.CreateFromFile(typeof(object).Assembly.Location);
 		var compilation = CSharpCompilation.Create(
 			assemblyName: nameof(TestsBase),

@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.3.15</Version>
-        <PackageReleaseNotes>Trying to fix Immutable.dll not found 4.</PackageReleaseNotes>
+        <Version>0.3.16</Version>
+        <PackageReleaseNotes>Added GetUsings.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>

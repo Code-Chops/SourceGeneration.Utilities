@@ -36,12 +36,12 @@ public static class NameHelpers
 
 		if (!type.IsGenericType)
 		{
-			return type.FullName;
+			return type.FullName ?? type.Name;
 		}
 
 		var builder = new StringBuilder();
 		var name = type.Name;
-		var index = name.IndexOf("`");
+		var index = name.IndexOf("`", StringComparison.Ordinal);
 		builder.AppendFormat("{0}.{1}", type.Namespace, name.Substring(0, index));
 		builder.Append('<');
 		var first = true;

@@ -2,7 +2,7 @@
 
 public class TypeSymbolTests : TestsBase
 {
-	protected override SyntaxTree SyntaxTree { get; } = CSharpSyntaxTree.ParseText(@"
+	private static readonly SyntaxTree SyntaxTree = CSharpSyntaxTree.ParseText(@"
 using System;
 
 namespace CodeChops.Test;
@@ -24,10 +24,15 @@ public static class TestClass
 }
 ");
 
+	public TypeSymbolTests()
+		: base(SyntaxTree)
+	{
+	}
+	
 	[Fact]
 	public void FullTypeName_IsRetrieved_Correctly()
 	{
-		var objectCreationSyntax = this.SyntaxTree.GetRoot().DescendantNodes().OfType<RecordDeclarationSyntax>().Single();
+		var objectCreationSyntax = SyntaxTree.GetRoot().DescendantNodes().OfType<RecordDeclarationSyntax>().Single();
 		var namedTypeSymbol = (ITypeSymbol)this.SemanticModel.GetDeclaredSymbol(objectCreationSyntax)!;
 
 		var fullTypeName = namedTypeSymbol.GetFullTypeNameWithGenericParameters();
@@ -38,7 +43,7 @@ public static class TestClass
 	[Fact]
 	public void FullTypeName_WithoutGenericParameters_IsRetrieved_Correctly()
 	{
-		var objectCreationSyntax = this.SyntaxTree.GetRoot().DescendantNodes().OfType<RecordDeclarationSyntax>().Single();
+		var objectCreationSyntax = SyntaxTree.GetRoot().DescendantNodes().OfType<RecordDeclarationSyntax>().Single();
 		var namedTypeSymbol = (ITypeSymbol)this.SemanticModel.GetDeclaredSymbol(objectCreationSyntax)!;
 
 		var fullTypeName = namedTypeSymbol.GetFullTypeNameWithoutGenericParameters();
@@ -49,7 +54,7 @@ public static class TestClass
 	[Fact]
 	public void TypeName_WithGenericParameters_IsRetrieved_Correctly()
 	{
-		var objectCreationSyntax = this.SyntaxTree.GetRoot().DescendantNodes().OfType<RecordDeclarationSyntax>().Single();
+		var objectCreationSyntax = SyntaxTree.GetRoot().DescendantNodes().OfType<RecordDeclarationSyntax>().Single();
 		var namedTypeSymbol = (ITypeSymbol)this.SemanticModel.GetDeclaredSymbol(objectCreationSyntax)!;
 
 		var fullTypeName = namedTypeSymbol.GetTypeNameWithGenericParameters();
@@ -68,7 +73,7 @@ public static class TestClass
 	[InlineData(typeof(ClassDeclarationSyntax),		"public static partial class",				true)]
 	public void ClassDefinition_IsRetrieved_Correctly(Type type, string expectedDefinition, bool makePartial)
 	{
-		var objectCreationSyntax = this.SyntaxTree.GetRoot().DescendantNodes().Single(node => node.GetType() == type);
+		var objectCreationSyntax = SyntaxTree.GetRoot().DescendantNodes().Single(node => node.GetType() == type);
 		var namedTypeSymbol = (ITypeSymbol)this.SemanticModel.GetDeclaredSymbol(objectCreationSyntax)!;
 		
 		var definition = namedTypeSymbol.GetObjectDeclaration(makePartial);

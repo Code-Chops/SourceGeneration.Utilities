@@ -2,7 +2,7 @@
 
 public class AttributeTests : TestsBase
 {
-	protected override SyntaxTree SyntaxTree { get; } = CSharpSyntaxTree.ParseText(@"
+	private static readonly SyntaxTree SyntaxTree = CSharpSyntaxTree.ParseText(@"
 using System;
 
 namespace CodeChops.Test;
@@ -20,8 +20,9 @@ private partial struct TestClass
 	private StructDeclarationSyntax StructDeclarationSyntax { get; }
 
 	public AttributeTests()
+		: base(SyntaxTree)
 	{
-		this.StructDeclarationSyntax = this.SyntaxTree.GetRoot().DescendantNodes().OfType<StructDeclarationSyntax>().Single();
+		this.StructDeclarationSyntax = SyntaxTree.GetRoot().DescendantNodes().OfType<StructDeclarationSyntax>().Single();
 	}
 
 	[Fact]
@@ -53,7 +54,7 @@ private partial struct TestClass
 
 		Assert.NotNull(attribute);
 		
-		attribute!.Name.ExtractAttributeName(CancellationToken.None, out var genericTypeParams);
+		attribute.Name.ExtractAttributeName(CancellationToken.None, out var genericTypeParams);
 
 		Assert.Single(genericTypeParams);
 		Assert.Equal("int", genericTypeParams.Single());

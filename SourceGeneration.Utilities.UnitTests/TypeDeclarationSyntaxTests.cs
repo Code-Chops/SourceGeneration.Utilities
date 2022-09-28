@@ -2,7 +2,6 @@
 
 public class TypeDeclarationSyntaxTests
 {
-	
 	[Fact]
 	public void ClassGenericConstraints_IsRetrieved_Correctly()
 	{
@@ -33,6 +32,26 @@ public class ClassWithoutConstraints
 ", recordConstraint);
 		
 		Assert.Null(classConstraint);
+	}
+	
+	[Fact]
+	public void ClassUsings_IsRetrieved_Correctly()
+	{
+		var syntaxTree = CSharpSyntaxTree.ParseText(@"
+using System;
 
+namespace CodeChops.Test;
+
+public class ClassWithoutConstraints
+{
+}
+");
+		
+		var classCreationSyntax = syntaxTree.GetRoot().DescendantNodes().OfType<ClassDeclarationSyntax>().Single();
+		
+		var usings = classCreationSyntax.GetUsings();
+		
+		Assert.Equal(@"using System;", usings);
+		
 	}
 }
