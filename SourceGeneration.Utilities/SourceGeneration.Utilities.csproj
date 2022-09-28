@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.3.16</Version>
-        <PackageReleaseNotes>Added GetUsings.</PackageReleaseNotes>
+        <Version>0.3.17</Version>
+        <PackageReleaseNotes>Added support for multiple usings for GetUsings.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>

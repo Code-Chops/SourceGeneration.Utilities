@@ -39,6 +39,7 @@ public class ClassWithoutConstraints
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(@"
 using System;
+using System.Buffers;
 
 namespace CodeChops.Test;
 
@@ -49,9 +50,9 @@ public class ClassWithoutConstraints
 		
 		var classCreationSyntax = syntaxTree.GetRoot().DescendantNodes().OfType<ClassDeclarationSyntax>().Single();
 		
-		var usings = classCreationSyntax.GetUsings();
+		var usings = classCreationSyntax.GetUsings().ToList();
 		
-		Assert.Equal(@"using System;", usings);
-		
+		Assert.Contains("using System.Buffers;", usings);
+		Assert.Contains("using System;", usings);
 	}
 }

@@ -15,10 +15,15 @@ public static class TypeDeclarationSyntaxExtensions
 		return constraints;
 	}
 
-	public static string? GetUsings(this TypeDeclarationSyntax type)
+	public static IEnumerable<string> GetUsings(this TypeDeclarationSyntax type)
 	{
 		var root = type.SyntaxTree.GetRoot();
-		var usings = root.ChildNodes().SingleOrDefault(node => node is UsingDirectiveSyntax);
-		return usings?.ToString();
+		
+		var usings = root
+			.ChildNodes()
+			.Where(node => node is UsingDirectiveSyntax)
+			.Select(u => u.ToString());
+		
+		return usings;
 	}
 }
