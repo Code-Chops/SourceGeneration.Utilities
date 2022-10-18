@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.3.17</Version>
-        <PackageReleaseNotes>Added support for multiple usings for GetUsings.</PackageReleaseNotes>
+        <Version>0.3.2</Version>
+        <PackageReleaseNotes>Added editorconfig.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>
@@ -27,10 +27,6 @@
         <Copyright>Copyright (c) CodeChops $([System.DateTime]::Now.ToString(yyyy))</Copyright>
         <Description>Utilities for easy implementation of source generators.</Description>
         <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-        <NoWarn>
-            1591, <!-- Missing XML comment for publicly visible type or member -->
-            1573, <!-- Parameter has no matching param tag in the XML comment -->
-        </NoWarn>
     </PropertyGroup>
 
     <!-- Creates local nuget packages if in release mode and environment variable LocalNuGetPackagesFolder is configured -->
