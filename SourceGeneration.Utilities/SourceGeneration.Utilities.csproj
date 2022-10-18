@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.3.3</Version>
+        <Version>0.4.0</Version>
         <PackageReleaseNotes>Added editorconfig.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
