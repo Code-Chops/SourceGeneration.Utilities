@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.4.1</Version>
-        <PackageReleaseNotes>Fixed FileNameHelper ToName and added StringBuilderExtensions.</PackageReleaseNotes>
+        <Version>0.4.2</Version>
+        <PackageReleaseNotes>Added Write StringExtensions.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>

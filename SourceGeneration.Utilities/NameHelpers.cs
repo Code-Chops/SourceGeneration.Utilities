@@ -30,14 +30,10 @@ public static class NameHelpers
 	public static string GetNameWithGenerics(Type type)
 	{
 		if (type.IsGenericParameter)
-		{
 			return type.Name;
-		}
 
 		if (!type.IsGenericType)
-		{
 			return type.FullName ?? type.Name;
-		}
 
 		var builder = new StringBuilder();
 		var name = type.Name;
