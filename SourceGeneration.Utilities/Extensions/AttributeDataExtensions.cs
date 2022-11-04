@@ -30,19 +30,16 @@ public static class AttributeDataExtensions
 	}
 	
 	/// <summary>
-	/// Gets the value of the attribute argument, or the provided default value if the argument was not provided.
+	/// Gets the value of the attribute argument, or the (provided) default value if the argument was not provided.
 	/// </summary>
 	/// <typeparam name="T">The type of the argument parameter.</typeparam>
 	/// <returns>The attribute argument as <typeparamref name="T"/> or the default value if the argument is not provided.</returns>
 	/// <exception cref="InvalidCastException">When the argument cannot be casted to <typeparamref name="T"/></exception>
-	public static T GetArgumentOrDefault<T>(this AttributeData attribute, string parameterName, T defaultValue)
-	{
-		if (!attribute.TryGetArgument<T>(parameterName, out var argument)) 
-			return defaultValue;
+	public static T? GetArgumentOrDefault<T>(this AttributeData attribute, string parameterName, T? defaultValue = default) 
+		=> attribute.TryGetArgument<T?>(parameterName, out var argument) 
+			? argument! 
+			: defaultValue;
 
-		return argument!;
-	}
-	
 	/// <summary>
 	/// Tries to get the value of the attribute argument.
 	/// </summary>
