@@ -11,7 +11,7 @@
 
     <PropertyGroup Label="Package">
         <Version>0.5.2</Version>
-        <PackageReleaseNotes>Added trimEnd option to custom AppendLine.</PackageReleaseNotes>
+        <PackageReleaseNotes>Added trim end option to custom AppendLine.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>
