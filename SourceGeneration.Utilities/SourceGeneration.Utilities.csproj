@@ -4,14 +4,14 @@
         <AssemblyName>CodeChops.SourceGeneration.Utilities</AssemblyName>
         <RootNamespace>CodeChops.SourceGeneration.Utilities</RootNamespace>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <LangVersion>10</LangVersion>
+        <LangVersion>11</LangVersion>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.4.3</Version>
-        <PackageReleaseNotes>Default value of GetArgumentOrDefault is now optional.</PackageReleaseNotes>
+        <Version>0.5.0</Version>
+        <PackageReleaseNotes>Updated to .NET 7 and C# 11. Added AppendLineIfNotNull.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>

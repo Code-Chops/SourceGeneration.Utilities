@@ -19,4 +19,14 @@ public static class StringBuilderExtensions
 
 		return sb;
 	}
+
+	public static StringBuilder AppendLineIfNotNull(this StringBuilder sb, Func<string?> textRetriever)
+	{
+		var text = textRetriever();
+
+		if (text is not null) 
+			sb.AppendLine(text);
+
+		return sb;
+	}
 }
