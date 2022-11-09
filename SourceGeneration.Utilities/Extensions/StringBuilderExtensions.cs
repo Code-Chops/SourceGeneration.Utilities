@@ -20,7 +20,10 @@ public static class StringBuilderExtensions
 		return sb;
 	}
 
-	public static StringBuilder AppendLineIfNotNull(this StringBuilder sb, Func<string?> textRetriever)
+	/// <summary>
+	/// Appends the string builder with text and a newline if the result of the provided method is not null.
+	/// </summary>
+	public static StringBuilder AppendLine(this StringBuilder sb, Func<string?> textRetriever)
 	{
 		var text = textRetriever();
 

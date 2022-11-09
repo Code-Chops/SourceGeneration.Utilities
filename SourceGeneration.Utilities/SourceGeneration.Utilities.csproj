@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.5.0</Version>
-        <PackageReleaseNotes>Updated to .NET 7 and C# 11. Added AppendLineIfNotNull.</PackageReleaseNotes>
+        <Version>0.5.1</Version>
+        <PackageReleaseNotes>Changed naming of AppendLineIfNotNull to AppendLine.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>
