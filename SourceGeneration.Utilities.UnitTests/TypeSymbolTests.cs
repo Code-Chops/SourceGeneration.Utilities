@@ -21,6 +21,7 @@ internal enum TestEnum
 
 public static class TestClass
 {
+	public static int Property {{ get; }}
 }
 ");
 
@@ -79,5 +80,16 @@ public static class TestClass
 		var definition = namedTypeSymbol.GetObjectDeclaration(makePartial);
 		
 		Assert.Equal(expectedDefinition, definition);
+	}
+
+	[Fact]
+	public void GetFullTypeName_ShouldBeCorrectFor_NativeTypeAlias()
+	{
+		var objectCreationSyntax = SyntaxTree.GetRoot().DescendantNodes().Single(node => node is ClassDeclarationSyntax);
+		var syntaxNode = objectCreationSyntax.ChildNodes().Single() as PropertyDeclarationSyntax;
+		var namedTypeSymbol = this.SemanticModel.GetDeclaredSymbol(syntaxNode!)!.Type;
+
+		Assert.Equal("global::System.Int32", namedTypeSymbol.GetFullTypeNameWithGenericParameters());
+		Assert.Equal("global::System.Int32", namedTypeSymbol.GetFullTypeNameWithoutGenericParameters());
 	}
 }

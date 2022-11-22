@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.5.2</Version>
-        <PackageReleaseNotes>Added trim end option to custom AppendLine.</PackageReleaseNotes>
+        <Version>0.5.3</Version>
+        <PackageReleaseNotes>Fixed GetFullTypeName for aliases.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>
@@ -45,7 +45,7 @@
     </ItemGroup>
 
 	<ItemGroup Label="PackageReferences">
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" PrivateAssets="all" />
 	</ItemGroup>
     
 </Project>	

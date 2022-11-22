@@ -311,11 +311,13 @@ public static class TypeSymbolExtensions
 	/// <summary>
 	/// Returns whether the <see cref="ITypeSymbol"/> or a base type has an override of <see cref="Object.Equals(object)"/> more specific than <see cref="Object"/>'s implementation.
 	/// </summary>
-	public static bool HasEqualsOverride(this ITypeSymbol typeSymbol, bool falseForStructs = false)
+	public static bool HasEqualsOverride(this ITypeSymbol typeSymbol)
 	{
 		// Technically this could match an overridden "new" Equals defined by a base type, but that is a nonsense scenario
-		var result = typeSymbol.GetMembers(nameof(Equals)).OfType<IMethodSymbol>().Any(method => method.IsOverride && !method.IsStatic &&
-		                                                                                         method.Arity == 0 && method.Parameters.Length == 1 && method.Parameters[0].Type.IsType<object>());
+		var result = typeSymbol
+			.GetMembers(nameof(Equals))
+			.OfType<IMethodSymbol>()
+			.Any(method => method.IsOverride && method is { IsStatic: false, Arity: 0, Parameters.Length: 1 } && method.Parameters[0].Type.IsType<object>());
 
 		return result;
 	}
@@ -417,10 +419,10 @@ public static class TypeSymbolExtensions
 	}
 
 	/// <summary>
-	/// Enumerates the primitive types (string, int, bool, etc.) from which the given <see cref="ITypeSymbol"/> is convertible.
+	/// Enumerates the native types (string, int, bool, decimal, double, char, etc.) from which the given <see cref="ITypeSymbol"/> is convertible.
 	/// </summary>
 	/// <param name="skipForSystemTypes">If true, if the given type is directly under the System namespace, this method yields nothing.</param>
-	public static IEnumerable<Type> GetAvailableConversionsFromPrimitives(this ITypeSymbol typeSymbol, bool skipForSystemTypes)
+	public static IEnumerable<Type> GetAvailableConversionsFromNatives(this ITypeSymbol typeSymbol, bool skipForSystemTypes = false)
 	{
 		if (skipForSystemTypes && typeSymbol.ContainingNamespace.Name == "System" && (typeSymbol.ContainingNamespace.ContainingNamespace?.IsGlobalNamespace ?? true))
 			yield break;
@@ -429,12 +431,57 @@ public static class TypeSymbolExtensions
 
 		if (typeSymbol.HasConversionFrom("Byte", "System")) yield return typeof(byte);
 		if (typeSymbol.HasConversionFrom("SByte", "System")) yield return typeof(sbyte);
-		if (typeSymbol.HasConversionFrom("UInt16", "System")) yield return typeof(ushort);
-		if (typeSymbol.HasConversionFrom("Int16", "System")) yield return typeof(short);
-		if (typeSymbol.HasConversionFrom("UInt32", "System")) yield return typeof(uint);
+
+		if (typeSymbol.HasConversionFrom("Char", "System")) yield return typeof(char);
+
+		if (typeSymbol.HasConversionFrom("Decimal", "System")) yield return typeof(decimal);
+
+		if (typeSymbol.HasConversionFrom("Double", "System")) yield return typeof(double);
+		if (typeSymbol.HasConversionFrom("Float", "System")) yield return typeof(float);
+		
 		if (typeSymbol.HasConversionFrom("Int32", "System")) yield return typeof(int);
-		if (typeSymbol.HasConversionFrom("UInt64", "System")) yield return typeof(ulong);
+		if (typeSymbol.HasConversionFrom("UInt32", "System")) yield return typeof(uint);
+		
+		if (typeSymbol.HasConversionFrom("IntPtr", "System")) yield return typeof(nint);
+		if (typeSymbol.HasConversionFrom("UIntPtr", "System")) yield return typeof(nuint);
+		
 		if (typeSymbol.HasConversionFrom("Int64", "System")) yield return typeof(long);
+		if (typeSymbol.HasConversionFrom("UInt64", "System")) yield return typeof(ulong);
+		
+		if (typeSymbol.HasConversionFrom("Int16", "System")) yield return typeof(short);
+		if (typeSymbol.HasConversionFrom("UInt16", "System")) yield return typeof(ushort);
+	}
+
+	public static Type? GetTypeFromAlias(this ISymbol symbol)
+	{
+		if (symbol.ContainingNamespace.Name != "System" || symbol.ContainingNamespace.ContainingNamespace?.IsGlobalNamespace == false)
+			return null;
+		
+		if (symbol.Name == "Boolean") return typeof(bool);
+
+		if (symbol.Name == "Byte") return typeof(byte);
+		if (symbol.Name == "SByte") return typeof(sbyte);
+
+		if (symbol.Name == "Char") return typeof(char);
+		
+		if (symbol.Name == "Decimal") return typeof(decimal);
+
+		if (symbol.Name == "Double") return typeof(double);
+		if (symbol.Name == "Float") return typeof(float);
+		
+		if (symbol.Name == "Int32") return typeof(int);
+		if (symbol.Name == "UInt32") return typeof(uint);
+
+		if (symbol.Name == "IntPtr") return typeof(nint);
+		if (symbol.Name == "UIntPtr") return typeof(nuint);
+		
+		if (symbol.Name == "Int64") return typeof(long);
+		if (symbol.Name == "UInt64") return typeof(ulong);
+		
+		if (symbol.Name == "Int16") return typeof(short);
+		if (symbol.Name == "UInt16") return typeof(ushort);
+
+		return null;
 	}
 
 	/// <summary>
@@ -467,14 +514,27 @@ public static class TypeSymbolExtensions
 	}
 
 	private static readonly SymbolDisplayFormat TypeNameWithoutGenericParametersDisplayFormat = new(SymbolDisplayGlobalNamespaceStyle.Included, SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces);
+	/// <summary>
+	/// Converts names like 'string' to 'global::System.String' including generic parameter names (if used).
+	/// </summary>
 	public static string GetFullTypeNameWithoutGenericParameters(this ITypeSymbol typeSymbol)
-		=> typeSymbol.ToDisplayString(TypeNameWithoutGenericParametersDisplayFormat);
+	{
+		var primitive = typeSymbol.GetTypeFromAlias();
+		if (primitive is not null) return $"global::System.{primitive.FullName ?? primitive.Name}";
+		
+		return typeSymbol.ToDisplayString(TypeNameWithoutGenericParametersDisplayFormat);
+	}
 
 	/// <summary>
 	/// Converts names like 'string' to 'global::System.String' including generic parameter names (if used).
 	/// </summary>
 	public static string GetFullTypeNameWithGenericParameters(this ITypeSymbol typeSymbol)
-		=> typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+	{
+		var primitive = typeSymbol.GetTypeFromAlias();
+		if (primitive is not null) return $"global::System.{primitive.FullName ?? primitive.Name}";
+		
+		return typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+	}
 
 	private static readonly SymbolDisplayFormat TypeNameWithGenericParametersDisplayFormat = new(SymbolDisplayGlobalNamespaceStyle.Omitted, SymbolDisplayTypeQualificationStyle.NameOnly, SymbolDisplayGenericsOptions.IncludeTypeParameters);
 	public static string GetTypeNameWithGenericParameters(this ITypeSymbol typeSymbol)
@@ -503,7 +563,7 @@ public static class TypeSymbolExtensions
 	{
 		var accessibility = typeSymbol.DeclaredAccessibility.ToString().ToLowerInvariant();
 		var staticOrEmpty = typeSymbol.IsStatic ? "static " : null;
-		var abstractOrEmpty = typeSymbol.IsAbstract && typeSymbol.TypeKind == TypeKind.Class ? "abstract " : null;
+		var abstractOrEmpty = typeSymbol is { IsAbstract: true, TypeKind: TypeKind.Class } ? "abstract " : null;
 		var partialOrEmpty = includePartial && typeSymbol.TypeKind != TypeKind.Enum ? "partial " : null;
 		
 		var definition = $"{accessibility} {staticOrEmpty}{abstractOrEmpty}{partialOrEmpty}{typeSymbol.GetClassTypeName()}";
