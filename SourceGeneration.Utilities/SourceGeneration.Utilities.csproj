@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.5.5</Version>
-        <PackageReleaseNotes>Fixed GetFullTypeName from aliases.</PackageReleaseNotes>
+        <Version>0.5.6</Version>
+        <PackageReleaseNotes>Fixed GetFullTypeName from aliases 2.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>

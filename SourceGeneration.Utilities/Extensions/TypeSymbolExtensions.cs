@@ -148,11 +148,10 @@ public static class TypeSymbolExtensions
 	}
 
 	/// <summary>
-	/// Returns whether the <see cref="ITypeSymbol"/> represents an integral type, such as <see cref="int"/> or <see cref="ulong"/>.
+	/// Returns whether the <see cref="ITypeSymbol"/> represents an numeric type, such as <see cref="int"/> or <see cref="ulong"/>.
 	/// </summary>
 	/// <param name="seeThroughNullable">Whether to return true for a <see cref="Nullable{T}"/> of a matching underlying type.</param>
-	/// <param name="includeDecimal">Whether to consider <see cref="decimal"/> as an integral type.</param>
-	public static bool IsIntegral(this ITypeSymbol typeSymbol, bool seeThroughNullable, bool includeDecimal = false)
+	public static bool IsNumeric(this ITypeSymbol typeSymbol, bool seeThroughNullable)
 	{
 		if (typeSymbol.IsNullable(out var underlyingType) && seeThroughNullable)
 			typeSymbol = underlyingType;
@@ -165,7 +164,11 @@ public static class TypeSymbolExtensions
 		             || typeSymbol.IsType<int>()
 		             || typeSymbol.IsType<ulong>()
 		             || typeSymbol.IsType<long>()
-		             || (includeDecimal && typeSymbol.IsType<decimal>());
+		             || typeSymbol.IsType<nuint>()
+		             || typeSymbol.IsType<nint>()
+		             || typeSymbol.IsType<float>()
+		             || typeSymbol.IsType<double>()
+		             || typeSymbol.IsType<decimal>();
 
 		return result;
 	}
@@ -452,38 +455,6 @@ public static class TypeSymbolExtensions
 		if (typeSymbol.HasConversionFrom("UInt16", "System")) yield return typeof(ushort);
 	}
 
-	public static Type? GetTypeFromAlias(this ISymbol symbol)
-	{
-		if (symbol.ContainingNamespace.Name != "System" || symbol.ContainingNamespace.ContainingNamespace?.IsGlobalNamespace == false)
-			return null;
-		
-		if (symbol.Name == "Boolean") return typeof(bool);
-
-		if (symbol.Name == "Byte") return typeof(byte);
-		if (symbol.Name == "SByte") return typeof(sbyte);
-
-		if (symbol.Name == "Char") return typeof(char);
-		
-		if (symbol.Name == "Decimal") return typeof(decimal);
-
-		if (symbol.Name == "Double") return typeof(double);
-		if (symbol.Name == "Float") return typeof(float);
-		
-		if (symbol.Name == "Int32") return typeof(int);
-		if (symbol.Name == "UInt32") return typeof(uint);
-
-		if (symbol.Name == "IntPtr") return typeof(nint);
-		if (symbol.Name == "UIntPtr") return typeof(nuint);
-		
-		if (symbol.Name == "Int64") return typeof(long);
-		if (symbol.Name == "UInt64") return typeof(ulong);
-		
-		if (symbol.Name == "Int16") return typeof(short);
-		if (symbol.Name == "UInt16") return typeof(ushort);
-
-		return null;
-	}
-
 	/// <summary>
 	/// Returns the code for a string expression of the given <paramref name="memberName"/> of "this".
 	/// </summary>
@@ -517,24 +488,15 @@ public static class TypeSymbolExtensions
 	/// <summary>
 	/// Converts names like 'string' to 'global::System.String' including generic parameter names (if used).
 	/// </summary>
-	public static string GetFullTypeNameWithoutGenericParameters(this ITypeSymbol typeSymbol)
-	{
-		var primitive = typeSymbol.GetTypeFromAlias();
-		if (primitive is not null) return $"global::{primitive.FullName ?? $"System.{primitive.Name}"}";
-		
-		return typeSymbol.ToDisplayString(TypeNameWithoutGenericParametersDisplayFormat);
-	}
+	public static string GetFullTypeNameWithoutGenericParameters(this ITypeSymbol typeSymbol) 
+		=> typeSymbol.ToDisplayString(TypeNameWithoutGenericParametersDisplayFormat);
 
+	private static readonly SymbolDisplayFormat FullTypeNameWithGenericParametersDisplayFormat = new(SymbolDisplayGlobalNamespaceStyle.Included, SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces, SymbolDisplayGenericsOptions.IncludeTypeParameters);
 	/// <summary>
 	/// Converts names like 'string' to 'global::System.String' including generic parameter names (if used).
 	/// </summary>
-	public static string GetFullTypeNameWithGenericParameters(this ITypeSymbol typeSymbol)
-	{
-		var primitive = typeSymbol.GetTypeFromAlias();
-		if (primitive is not null) return $"global::{primitive.FullName ?? $"System.{primitive.Name}"}";
-		
-		return typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
-	}
+	public static string GetFullTypeNameWithGenericParameters(this ITypeSymbol typeSymbol) 
+		=> typeSymbol.ToDisplayString(FullTypeNameWithGenericParametersDisplayFormat);
 
 	private static readonly SymbolDisplayFormat TypeNameWithGenericParametersDisplayFormat = new(SymbolDisplayGlobalNamespaceStyle.Omitted, SymbolDisplayTypeQualificationStyle.NameOnly, SymbolDisplayGenericsOptions.IncludeTypeParameters);
 	public static string GetTypeNameWithGenericParameters(this ITypeSymbol typeSymbol)
