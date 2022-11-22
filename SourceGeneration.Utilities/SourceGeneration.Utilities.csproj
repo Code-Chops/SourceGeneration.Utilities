@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.5.4</Version>
-        <PackageReleaseNotes>Downgraded Microsoft.CodeAnalysis.CSharp to prevent errors.</PackageReleaseNotes>
+        <Version>0.5.5</Version>
+        <PackageReleaseNotes>Fixed GetFullTypeName from aliases.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>

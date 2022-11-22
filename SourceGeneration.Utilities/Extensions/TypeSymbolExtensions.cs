@@ -520,7 +520,7 @@ public static class TypeSymbolExtensions
 	public static string GetFullTypeNameWithoutGenericParameters(this ITypeSymbol typeSymbol)
 	{
 		var primitive = typeSymbol.GetTypeFromAlias();
-		if (primitive is not null) return $"global::System.{primitive.FullName ?? primitive.Name}";
+		if (primitive is not null) return $"global::{primitive.FullName ?? $"System.{primitive.Name}"}";
 		
 		return typeSymbol.ToDisplayString(TypeNameWithoutGenericParametersDisplayFormat);
 	}
@@ -531,7 +531,7 @@ public static class TypeSymbolExtensions
 	public static string GetFullTypeNameWithGenericParameters(this ITypeSymbol typeSymbol)
 	{
 		var primitive = typeSymbol.GetTypeFromAlias();
-		if (primitive is not null) return $"global::System.{primitive.FullName ?? primitive.Name}";
+		if (primitive is not null) return $"global::{primitive.FullName ?? $"System.{primitive.Name}"}";
 		
 		return typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
 	}
