@@ -29,7 +29,9 @@ public static class StringBuilderExtensions
 
 		if (text is not null)
 		{
-			if (trimEnd) sb.TrimEnd();
+			if (trimEnd) 
+				text = text.TrimEnd();
+			
 			sb.AppendLine(text);
 		}
 
