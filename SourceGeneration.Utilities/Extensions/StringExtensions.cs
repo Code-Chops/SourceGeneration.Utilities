@@ -13,7 +13,7 @@ public static class StringExtensions
 	private static ImmutableArray<char> Base32Alphabet { get; } = "0123456789ABCDEFGHJKMNPQRSTVWXYZ".ToImmutableArray();
 
 	/// <summary>
-	/// Returns the input <see cref="string"/> with the first character made uppercase.
+	/// Returns the input with the first character converted to uppercase.
 	/// </summary>
 	public static string ToTitleCase(this string source)
 	{
@@ -22,11 +22,11 @@ public static class StringExtensions
 		if (source.Length == 0 || Char.IsUpper(source[0]))
 			return source;
 
-		var chars = new char[source.Length];
+		var chars = new Char[source.Length];
 		chars[0] = Char.ToUpperInvariant(source[0]);
 		source.CopyTo(1, chars, 1, source.Length - 1);
 
-		return new string(chars);
+		return new String(chars);
 	}
 
 	/// <summary>
@@ -46,6 +46,9 @@ public static class StringExtensions
 		return source;
 	}
 
+	/// <summary>
+	/// Gets a stable hash code (int). 
+	/// </summary>
 	// ReSharper disable once MemberCanBePrivate.Global
 	public static int GetStableHashCode32(this string source)
 	{
@@ -71,6 +74,9 @@ public static class StringExtensions
 		}
 	}
 
+	/// <summary>
+	/// Gets a stable hash code (ulong). 
+	/// </summary>
 	// ReSharper disable once MemberCanBePrivate.Global
 	public static ulong GetStableHashCode64(this string source)
 	{
@@ -95,6 +101,9 @@ public static class StringExtensions
 		}
 	}
 
+	/// <summary>
+	/// Gets a stable int hash code as string.
+	/// </summary>
 	public static string GetStableStringHashCode32(this string source)
 	{
 		var hashCode = source.GetStableHashCode32();
@@ -111,6 +120,9 @@ public static class StringExtensions
 		return result;
 	}
 
+	/// <summary>
+	/// Gets a stable ulong hash code as string.
+	/// </summary>
 	public static string GetStableStringHashCode64(this string source)
 	{
 		var hashCode = source.GetStableHashCode64();
@@ -128,9 +140,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// <para>
 	/// Converts the given 8 bytes to 13 base32 chars.
-	/// </para>
 	/// </summary>
 	private static void ToBase32Chars8(ReadOnlySpan<byte> bytes, Span<char> chars)
 	{
@@ -152,7 +162,7 @@ public static class StringExtensions
 	}
 	
 	/// <summary>
-	/// Only returns the value with a leading space when the provided value is not null. 
+	/// Only returns the value with a leading space when the provided value is not null.
 	/// </summary>
 	public static string? Write<T>(this T value)
 		=> value is null ? null : $" {value}";

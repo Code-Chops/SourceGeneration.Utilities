@@ -5,6 +5,7 @@ namespace CodeChops.SourceGeneration.Utilities;
 public static class FileNameHelpers
 {
 	/// <summary>
+	/// Gets a unique source generation file name (takes namespaces and generic parameters into account).
 	/// <list type="bullet">
 	/// <item>Removes 'global::' from the start of the name if it exists.</item>
 	/// <item>Replaces invalid file name characters to '_'.</item>

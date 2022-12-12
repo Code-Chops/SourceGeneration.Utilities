@@ -148,7 +148,7 @@ public static class TypeSymbolExtensions
 	}
 
 	/// <summary>
-	/// Returns whether the <see cref="ITypeSymbol"/> represents an numeric type, such as <see cref="int"/> or <see cref="ulong"/>.
+	/// Returns whether the <see cref="ITypeSymbol"/> represents an numeric type, such as an <see cref="int"/> or <see cref="ulong"/>.
 	/// </summary>
 	/// <param name="seeThroughNullable">Whether to return true for a <see cref="Nullable{T}"/> of a matching underlying type.</param>
 	public static bool IsNumeric(this ITypeSymbol typeSymbol, bool seeThroughNullable)
@@ -486,7 +486,7 @@ public static class TypeSymbolExtensions
 
 	private static readonly SymbolDisplayFormat TypeNameWithoutGenericParametersDisplayFormat = new(SymbolDisplayGlobalNamespaceStyle.Included, SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces);
 	/// <summary>
-	/// Converts names like 'string' to 'global::System.String' including generic parameter names (if used).
+	/// Converts names like 'string' to 'global::System.String' excluding generic parameter names (if used).
 	/// </summary>
 	public static string GetFullTypeNameWithoutGenericParameters(this ITypeSymbol typeSymbol) 
 		=> typeSymbol.ToDisplayString(TypeNameWithoutGenericParametersDisplayFormat);
@@ -499,10 +499,16 @@ public static class TypeSymbolExtensions
 		=> typeSymbol.ToDisplayString(FullTypeNameWithGenericParametersDisplayFormat);
 
 	private static readonly SymbolDisplayFormat TypeNameWithGenericParametersDisplayFormat = new(SymbolDisplayGlobalNamespaceStyle.Omitted, SymbolDisplayTypeQualificationStyle.NameOnly, SymbolDisplayGenericsOptions.IncludeTypeParameters);
+	/// <summary>
+	/// Gets the type name including generic parameters (without namespace).
+	/// </summary>
 	public static string GetTypeNameWithGenericParameters(this ITypeSymbol typeSymbol)
 		=> typeSymbol.ToDisplayString(TypeNameWithGenericParametersDisplayFormat);
 
-	public static string? GetClassTypeName(this ITypeSymbol typeSymbol)
+	/// <summary>
+	/// Gets the name of the TypeKind. For example: a record class will be 'record class', an interface will be 'interface'. 
+	/// </summary>
+	public static string? GetTypeKindName(this ITypeSymbol typeSymbol)
 	{
 		if (!typeSymbol.IsType) return null;
 
@@ -528,7 +534,7 @@ public static class TypeSymbolExtensions
 		var abstractOrEmpty = typeSymbol is { IsAbstract: true, TypeKind: TypeKind.Class } ? "abstract " : null;
 		var partialOrEmpty = includePartial && typeSymbol.TypeKind != TypeKind.Enum ? "partial " : null;
 		
-		var definition = $"{accessibility} {staticOrEmpty}{abstractOrEmpty}{partialOrEmpty}{typeSymbol.GetClassTypeName()}";
+		var definition = $"{accessibility} {staticOrEmpty}{abstractOrEmpty}{partialOrEmpty}{typeSymbol.GetTypeKindName()}";
 
 		return definition;
 	}

@@ -7,6 +7,9 @@ namespace CodeChops.SourceGeneration.Utilities;
 /// </summary>
 public static class NameHelpers
 {
+	/// <summary>
+	/// Gets the name without generic parameters.
+	/// </summary>
 	public static string GetNameWithoutGenerics(string className)
 	{
 		var genericParameterIndex = className.IndexOf('<');
@@ -15,6 +18,9 @@ public static class NameHelpers
 		return classNameWithoutGenerics;
 	}
 
+	/// <summary>
+	/// Checks if a name contains a generic parameter.
+	/// </summary>
 	public static bool HasGenericParameter(string className)
 	{
 		var hasGenericParameter = className.Contains('<');

@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.7.0</Version>
-        <PackageReleaseNotes>Fixed AppendLine when end trimming for StringBuilderExtensions 2.</PackageReleaseNotes>
+        <Version>0.8.0</Version>
+        <PackageReleaseNotes>Added documentation and comments.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>
@@ -27,6 +27,7 @@
         <Copyright>Copyright (c) CodeChops $([System.DateTime]::Now.ToString(yyyy))</Copyright>
         <Description>Utilities for easy implementation of source generators.</Description>
         <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <!-- Creates local nuget packages if in release mode and environment variable LocalNuGetPackagesFolder is configured -->
@@ -35,8 +36,9 @@
     </Target>
 
     <ItemGroup Label="PackageAssets">
-        <None Include="Properties\LICENSE" Pack="true" PackagePath="" />
-        <None Include="Properties\icon.png" Pack="true" Visible="true" PackagePath="" />
+		<None Include="..\LICENSE" Pack="true" PackagePath="" />
+		<None Include="..\icon.png" Pack="true" Visible="true" PackagePath="" />
+		<None Include="..\README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
     <ItemGroup Label="InternalsVisibleTo">
@@ -47,5 +49,5 @@
 	<ItemGroup Label="PackageReferences">
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" PrivateAssets="all" />
 	</ItemGroup>
-    
+
 </Project>	

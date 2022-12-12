@@ -4,6 +4,9 @@ namespace CodeChops.SourceGeneration.Utilities.Extensions;
 
 public static class StringBuilderExtensions
 {
+	/// <summary>
+	/// Trims the end of a StringBuilder.
+	/// </summary>
 	public static StringBuilder TrimEnd(this StringBuilder sb)
 	{
 		if (sb.Length == 0) return sb;
@@ -21,7 +24,7 @@ public static class StringBuilderExtensions
 	}
 
 	/// <summary>
-	/// Appends the string builder with text and a newline if the result of the provided method is not null.
+	/// Appends the string builder with provided text and adds a newline if the resulting text is not `null`.
 	/// </summary>
 	public static StringBuilder AppendLine(this StringBuilder sb, Func<string?> textRetriever, bool trimEnd = false)
 	{

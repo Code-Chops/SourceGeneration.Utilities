@@ -4,6 +4,9 @@ namespace CodeChops.SourceGeneration.Utilities.Extensions;
 
 public static class TypeDeclarationSyntaxExtensions
 {
+	/// <summary>
+	/// Gets the generic constraints of a TypeDeclarationSyntax.
+	/// </summary>
 	public static string? GetClassGenericConstraints(this TypeDeclarationSyntax type)
 	{
 		if (type.ConstraintClauses.Count == 0) return null;
@@ -15,6 +18,9 @@ public static class TypeDeclarationSyntaxExtensions
 		return constraints;
 	}
 
+	/// <summary>
+	/// Gets the usings of a TypeDeclarationSyntax.
+	/// </summary>
 	public static IEnumerable<string> GetUsings(this TypeDeclarationSyntax type)
 	{
 		var root = type.SyntaxTree.GetRoot();
