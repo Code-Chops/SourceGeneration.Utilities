@@ -1,4 +1,4 @@
-# SourceGenerationUtilities
+# Source generation utilities
 
 Utilities for easy implementation of source generators.
 A big thanks to [TheArchitectDev](https://github.com/TheArchitectDev/) for providing many of these extensions.
