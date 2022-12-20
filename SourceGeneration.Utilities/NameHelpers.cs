@@ -27,7 +27,7 @@ public static class NameHelpers
 		if (genericParametersEndIndex < 0)
 			return null;
 		
-		var genericParameters = className.Substring(genericParametersEndIndex);
+		var genericParameters = className.Substring(genericParametersEndIndex + 1);
 
 		return genericParameters;
 	}
