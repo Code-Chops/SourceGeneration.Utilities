@@ -17,6 +17,20 @@ public static class NameHelpers
 
 		return classNameWithoutGenerics;
 	}
+	
+	/// <summary>
+	/// Gets the generic parameters.
+	/// </summary>
+	public static string? GetGenericsParameters(string className)
+	{
+		var genericParametersEndIndex = className.IndexOf('>');
+		if (genericParametersEndIndex < 0)
+			return null;
+		
+		var genericParameters = className.Substring(genericParametersEndIndex);
+
+		return genericParameters;
+	}
 
 	/// <summary>
 	/// Checks if a name contains a generic parameter.
