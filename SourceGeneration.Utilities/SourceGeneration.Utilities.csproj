@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.8.2</Version>
-        <PackageReleaseNotes>Fixed NameHelpers.GetGenericsParameters().</PackageReleaseNotes>
+        <Version>0.8.3</Version>
+        <PackageReleaseNotes>Fixed NameHelpers.GetGenericsParameters() 2.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>

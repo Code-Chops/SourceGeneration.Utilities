@@ -23,11 +23,11 @@ public static class NameHelpers
 	/// </summary>
 	public static string? GetGenericsParameters(string className)
 	{
-		var genericParametersEndIndex = className.IndexOf('>');
+		var genericParametersEndIndex = className.IndexOf('<');
 		if (genericParametersEndIndex < 0)
 			return null;
 		
-		var genericParameters = className.Substring(genericParametersEndIndex + 1);
+		var genericParameters = className.Substring(genericParametersEndIndex);
 
 		return genericParameters;
 	}
