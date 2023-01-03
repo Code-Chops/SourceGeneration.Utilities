@@ -21,7 +21,7 @@ public static class NameHelpers
 	/// <summary>
 	/// Gets the generic parameters.
 	/// </summary>
-	public static string? GetGenericsParameters(string className)
+	public static string? GetGenericParameters(string className)
 	{
 		var genericParametersEndIndex = className.IndexOf('<');
 		if (genericParametersEndIndex < 0)
