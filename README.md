@@ -3,6 +3,8 @@
 Utilities for easy implementation of source generators.
 A big thanks to [TheArchitectDev](https://github.com/TheArchitectDev/) for providing many of these extensions.
 
+> Check out [CodeChops projects](https://www.CodeChops.nl/projects) for more projects.
+
 ## Extensions
 ### AttributeDataExtensions
  - TryGetArguments: Tries to get the arguments of the attribute.
