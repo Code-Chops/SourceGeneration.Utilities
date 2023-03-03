@@ -73,7 +73,7 @@ A big thanks to [TheArchitectDev](https://github.com/TheArchitectDev/) for provi
 ### NameHelpers
 - GetNameWithoutGenerics: Gets the name without generic parameters.
 - HasGenericParameter: Checks if a name contains a generic parameter.
-- GetNameWithGenerics: Gets the name of a class including the generic types. E.g: `System.Collections.Generic.Dictionary'2` becomes `System.Collections.Generic.Dictionary&lt;System.String,System.Object&gt;`.
+- GetNameWithGenerics: Gets the name of a class including the generic types. E.g: `System.Collections.Generic.Dictionary'2` becomes `System.Collections.Generic.Dictionary<System.String,System.Object>`.
 
 > ** Has been provided by [TheArchitectDev](https://github.com/TheArchitectDev/).
 
