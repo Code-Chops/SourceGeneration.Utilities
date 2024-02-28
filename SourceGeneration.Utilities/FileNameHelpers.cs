@@ -19,13 +19,13 @@ public static class FileNameHelpers
 	/// <param name="fileName">The file name without the extension.</param>
 	public static string GetFileName(string fileName, AnalyzerConfigOptionsProvider configOptionsProvider)
 	{
-		fileName = fileName.StartsWith("global::") 
-			? fileName.Substring(8) 
+		fileName = fileName.StartsWith("global::")
+			? fileName.Substring(8)
 			: fileName;
-		
+
 		var buffer = new char[fileName.Length];
 		var i = 0;
-		var invalidCharacters = Path.GetInvalidFileNameChars();
+		var invalidCharacters = Path.GetInvalidFileNameChars().Concat(['<', '>']).ToArray();
 
 		foreach (var c in fileName)
 		{
@@ -35,15 +35,15 @@ public static class FileNameHelpers
 			i++;
 		}
 
-		fileName = new String(buffer);
-		
+		fileName = new string(buffer);
+
 		configOptionsProvider.GlobalOptions.TryGetValue("build_property.RootNamespace", out var rootNamespace);
-		
+
 		if (rootNamespace is not null && fileName.Length > rootNamespace.Length && fileName.Substring(0, rootNamespace.Length + 1) == $"{rootNamespace}.")
 			fileName = fileName.Substring(rootNamespace.Length + 1);
 
 		return fileName.EndsWith(".cs")
-			? fileName 
+			? fileName
 			: $"{fileName}.g.cs";
 	}
 }

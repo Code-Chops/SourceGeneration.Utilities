@@ -4,14 +4,14 @@
         <AssemblyName>CodeChops.SourceGeneration.Utilities</AssemblyName>
         <RootNamespace>CodeChops.SourceGeneration.Utilities</RootNamespace>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <LangVersion>11</LangVersion>
+        <LangVersion>12</LangVersion>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
     <PropertyGroup Label="Package">
-        <Version>0.9.0</Version>
-        <PackageReleaseNotes>Fixed typo and updated package reference.</PackageReleaseNotes>
+        <Version>0.9.1</Version>
+        <PackageReleaseNotes>Added extra chars to InvalidFileNameChars. Updated packages.</PackageReleaseNotes>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>CodeChops.SourceGeneration.Utilities</Title>
         <PackageId>CodeChops.SourceGeneration.Utilities</PackageId>
@@ -47,7 +47,7 @@
     </ItemGroup>
 
 	<ItemGroup Label="PackageReferences">
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" PrivateAssets="all" />
 	</ItemGroup>
 
-</Project>	
+</Project>
